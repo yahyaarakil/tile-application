@@ -1,9 +1,10 @@
 require('dotenv').config();
 const express = require('express');
-const dbConnection = require('./db/db_connection');
+const createTables = require('./db/create_tables').createTables;
 
 const app = express();
 
 app.listen(process.env.HTTPS_PORT, () => {
     console.log('Starting server');
+    createTables();
 });

@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 
 // create pool
-const pool = mysql.createPool({
+pool = mysql.createPool({
     waitForConnections: true,
     connectionLimit: 10,
     host: process.env.DB_HOST,
@@ -20,6 +20,5 @@ const makeQuery = (query, params) => {
 }
 
 module.exports = {
-    connect: connect,
     makeQuery: makeQuery,
 }

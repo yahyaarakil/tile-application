@@ -3,6 +3,7 @@ const express = require('express');
 const createTables = require('./db/create_tables').createTables;
 const User = require('./db/models/user');
 const Deparment = require('./db/models/department');
+const Recipe = require('./db/models/recipe');
 
 const app = express();
 
@@ -36,4 +37,24 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // console.log(dept);
     // await dept.save();
     // console.log(dept);
+
+    // let recipe = new Recipe({
+    //     Name: 'recipe2',
+    //     Size: '3x3',
+    //     CreatedBy: user,
+    //     MoldShape: 'moldshape1',
+    //     BakerName: 'baker1',
+    //     InitTemp: 25.5,
+    //     Humidity: 20,
+    //     DryingDuration: 50,
+    //     DryingTemp: 90,
+    //     BakingDuration: 120,
+    //     BakingTemp: 50
+    // });
+    // await recipe.save();
+    // let recipe1 = await Recipe.findByID(1);
+    // let recipe2 = await Recipe.findByID(2);
+    // recipe2.previousVersion = recipe1;
+    // recipe2.save();
+    // console.log(recipe2);
 });

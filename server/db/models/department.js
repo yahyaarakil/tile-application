@@ -29,7 +29,6 @@ class Department {
     async save() {
         try {
             if (this.inDB) {
-                console.log("UPDATING");
                 await dbConnection.makeQuery(
                     'UPDATE Departments SET Name=?, Manager=? WHERE ID=?;',
                     [ this.name, this.manager.email, this.id ]

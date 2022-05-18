@@ -124,7 +124,7 @@ tableCreators = [
         );`);
     },
     async () => {
-        return await dbConnection.makeQuery(`CREATE TABLE IF NOT EXISTS ContainsMaterial (
+        return await dbConnection.makeQuery(`CREATE TABLE IF NOT EXISTS ContainsMaterials (
             RecipeID INT NOT NULL,
             MaterialCode INT NOT NULL,
             

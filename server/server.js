@@ -12,7 +12,8 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // let user = await User.findByEmail('oguzkaganaltas@gmail.com');
     // console.log(user);
     
-    let user = await User.findByEmail('oguzkaganaltas@gmail.com');
+    // let user = await User.findByEmail('oguzkaganaltas@gmail.com');
+    let user = await User.findBySessionID('123');
     // let user = new User({
     //     Email: 'oguzkaganaltas@gmail.com',
     //     Password: 'lol123',
@@ -23,8 +24,7 @@ app.listen(process.env.HTTPS_PORT, async () => {
     //         '2'
     //     ]
     // });
-    user.telephoneNumbers.push('5');
     console.log(user);
-    await user.save();
-    console.log(user);
+    // await user.save();
+    // console.log(user);
 });

@@ -11,46 +11,31 @@ class User {
         this.telephoneNumbers = [...TelephoneNumbers];
     }
 
-    static async findBy(key, value) {
-        try {
-            let [results] = await dbConnection.makeQuery(`SELECT * FROM TileUsers WHERE ${key}=?;`, [ value ]);
+    static async findByEmail(email) {
+        return new Promise(async (resolve, reject) => {
+            let [results] = await dbConnection.makeQuery('SELECT * FROM TileUsers WHERE Email=?;', [ email ]);
             if (results.length > 0) {
                 let user = results[0];
                 user.inDB = true;
                 // populate PhoneNumbers
                 let [readPhoneNumbers] = await dbConnection.makeQuery(
                     'SELECT TelephoneNumber FROM PhoneNumbers WHERE Email=?;',
-                    [ user.Email ]
+                    [ email ]
                 );
                 user.TelephoneNumbers = [];
                 for (let index = 0; index < readPhoneNumbers.length; index++) {
                     const element = readPhoneNumbers[index];
                     user.TelephoneNumbers.push(element.TelephoneNumber);
                 }
-                return new User(user);
+                resolve(new User(user));
             } else {
-                return null;
+                resolve(null);
             }
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    static async findByEmail(email) {
-        return await this.findBy('Email', email);
-    }
-
-    static async findBySessionID(sessionID) {
-        let [results] = await dbConnection.makeQuery('SELECT * FROM SessionIDs WHERE SessionID=?', [ sessionID ]);
-        if (results.length > 0) {
-            return await this.findBy('Email', results[0].Email);
-        } else {
-            return null;
-        }
+        });
     }
 
     async save() {
-        try {
+        return new Promise(async (resolve, reject) => {
             if (this.inDB) {
                 console.log("UPDATING");
                 let user = await dbConnection.makeQuery(
@@ -77,10 +62,8 @@ class User {
                     [ this.email, telephoneNumber ]
                 );
             }
-            return this;
-        } catch (err) {
-            throw err;
-        }
+            resolve(this);
+        });
     }
 }
 

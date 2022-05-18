@@ -15,7 +15,7 @@ tableCreators = [
    async () => {
         return await dbConnection.makeQuery(`CREATE TABLE IF NOT EXISTS SessionIDs (
             Email VARCHAR(50) NOT NULL,
-            SessionID VARCHAR(500) NOT NULL,
+            SessionID VARCHAR(1000) NOT NULL,
 
             PRIMARY KEY (Email, SessionID),
             FOREIGN KEY (Email) REFERENCES TileUsers(Email)
@@ -140,7 +140,7 @@ tableCreators = [
         );`);
     },
 ];
-    
+
 module.exports = {
     createTables: async () => {
         for (let index = 0; index < tableCreators.length; index++) {

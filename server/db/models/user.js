@@ -52,14 +52,12 @@ class User {
     async save() {
         try {
             if (this.inDB) {
-                console.log("UPDATING");
-                let user = await dbConnection.makeQuery(
+                await dbConnection.makeQuery(
                     'UPDATE TileUsers SET Email=?, Password=?, FullName=?, Role=? WHERE Email=?;',
                     [ this.email, this.password, this.fullName, this.role, this.email ]
-                )
+                );
             } else {
-                console.log("INSERTING");
-                let user = await dbConnection.makeQuery(
+                await dbConnection.makeQuery(
                     'INSERT INTO TileUsers (Email, Password, FullName, Role) VALUES (?, ?, ?, ?);',
                     [ this.email, this.password, this.fullName, this.role ]
                 );

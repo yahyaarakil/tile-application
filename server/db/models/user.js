@@ -12,27 +12,25 @@ class User {
     }
 
     static async findByEmail(email) {
-        return new Promise((resolve, reject) => {
-            dbConnection.makeQuery('SELECT * FROM TileUsers WHERE Email=?;', [ email ]).then(([ results ]) => {
-                if (results.length > 0) {
-                    let user = results[0];
-                    user.inDB = true;
-                    // populate PhoneNumbers
-                    dbConnection.makeQuery(
-                        'SELECT TelephoneNumber FROM PhoneNumbers WHERE Email=?;',
-                        [ email ]
-                    ).then(([ results ]) => {
-                        user.TelephoneNumbers = [];
-                        for (let index = 0; index < results.length; index++) {
-                            const element = results[index];
-                            user.TelephoneNumbers.push(element.TelephoneNumber);
-                        }
-                        resolve(new User(user));
-                    }).catch((err) => reject(err));
-                } else {
-                    resolve(null);
+        return new Promise(async (resolve, reject) => {
+            let [results] = await dbConnection.makeQuery('SELECT * FROM TileUsers WHERE Email=?;', [ email ]);
+            if (results.length > 0) {
+                let user = results[0];
+                user.inDB = true;
+                // populate PhoneNumbers
+                let [readPhoneNumbers] = await dbConnection.makeQuery(
+                    'SELECT TelephoneNumber FROM PhoneNumbers WHERE Email=?;',
+                    [ email ]
+                );
+                user.TelephoneNumbers = [];
+                for (let index = 0; index < readPhoneNumbers.length; index++) {
+                    const element = readPhoneNumbers[index];
+                    user.TelephoneNumbers.push(element.TelephoneNumber);
                 }
-            }).catch((err) => reject(err));
+                resolve(new User(user));
+            } else {
+                resolve(null);
+            }
         });
     }
 
@@ -53,19 +51,18 @@ class User {
                 this.inDB = true;
             }
 
-            dbConnection.makeQuery(
+            await dbConnection.makeQuery(
                 'DELETE FROM PhoneNumbers WHERE Email=?;',
                 [ this.email ]
-            ).then(async () => {
-                for (let index = 0; index < this.telephoneNumbers.length; index++) {
-                    const telephoneNumber = this.telephoneNumbers[index];
-                    await dbConnection.makeQuery(
-                        'INSERT INTO PhoneNumbers (Email, TelephoneNumber) VALUES (?, ?);',
-                        [ this.email, telephoneNumber ]
-                    );
-                }
-                resolve(this);
-            }).catch((err) => reject(err));
+            );
+            for (let index = 0; index < this.telephoneNumbers.length; index++) {
+                const telephoneNumber = this.telephoneNumbers[index];
+                await dbConnection.makeQuery(
+                    'INSERT INTO PhoneNumbers (Email, TelephoneNumber) VALUES (?, ?);',
+                    [ this.email, telephoneNumber ]
+                );
+            }
+            resolve(this);
         });
     }
 }

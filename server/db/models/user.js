@@ -1,31 +1,31 @@
 const dbConnection = require('../db_connection');
 
 class User {
-    constructor ({ Email, Password, FullName, Role, telephoneNumbers, inDB }) {
+    constructor ({ Email, Password, FullName, Role, TelephoneNumbers, inDB }) {
         this.email = Email;
         this.password = Password;
         this.fullName = FullName;
         this.role = Role;
         this.inDB = inDB ? inDB : false;
 
-        this.telephoneNumbers = [...telephoneNumbers];
+        this.telephoneNumbers = [...TelephoneNumbers];
     }
 
     static async findByEmail(email) {
         return new Promise((resolve, reject) => {
-            dbConnection.makeQuery('SELECT * FROM TileUsers WHERE Email=?', [ email ]).then(([ results ]) => {
+            dbConnection.makeQuery('SELECT * FROM TileUsers WHERE Email=?;', [ email ]).then(([ results ]) => {
                 if (results.length > 0) {
                     let user = results[0];
                     user.inDB = true;
                     // populate PhoneNumbers
                     dbConnection.makeQuery(
-                        'SELECT TelephoneNumber FROM PhoneNumbers WHERE Email=?',
+                        'SELECT TelephoneNumber FROM PhoneNumbers WHERE Email=?;',
                         [ email ]
                     ).then(([ results ]) => {
-                        user.telephoneNumbers = [];
+                        user.TelephoneNumbers = [];
                         for (let index = 0; index < results.length; index++) {
                             const element = results[index];
-                            user.telephoneNumbers.push(element.TelephoneNumber);
+                            user.TelephoneNumbers.push(element.TelephoneNumber);
                         }
                         resolve(new User(user));
                     }).catch((err) => reject(err));
@@ -37,34 +37,34 @@ class User {
     }
 
     async save() {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+            if (this.inDB) {
+                console.log("UPDATING");
+                let user = await dbConnection.makeQuery(
+                    'UPDATE TileUsers SET Email=?, Password=?, FullName=?, Role=? WHERE Email=?;',
+                    [ this.email, this.password, this.fullName, this.role, this.email ]
+                )
+            } else {
+                console.log("INSERTING");
+                let user = await dbConnection.makeQuery(
+                    'INSERT INTO TileUsers (Email, Password, FullName, Role) VALUES (?, ?, ?, ?);',
+                    [ this.email, this.password, this.fullName, this.role ]
+                );
+                this.inDB = true;
+            }
+
             dbConnection.makeQuery(
-                'DELETE FROM PhoneNumbers WHERE Email=?',
+                'DELETE FROM PhoneNumbers WHERE Email=?;',
                 [ this.email ]
             ).then(async () => {
                 for (let index = 0; index < this.telephoneNumbers.length; index++) {
                     const telephoneNumber = this.telephoneNumbers[index];
                     await dbConnection.makeQuery(
-                        'INSERT INTO PhoneNumbers Email=?, TelephoneNumber=?',
+                        'INSERT INTO PhoneNumbers (Email, TelephoneNumber) VALUES (?, ?);',
                         [ this.email, telephoneNumber ]
                     );
                 }
-                if (this.inDB) {
-                    dbConnection.makeQuery(
-                        'UPDATE TileUsers SET Email=?, Password=?, FullName=?, Role=? WHERE Email=?',
-                        [ this.email, this.password, this.fullName, this.role, this.email ]
-                    ).then(() => {
-                        resolve(this);
-                    }).catch((err) => reject(err));
-                } else {
-                    dbConnection.makeQuery(
-                        'INSERT INTO TileUsers Email=?, Password=?, FullName=?, Role=?',
-                        [ this.email, this.password, this.fullName, this.role ]
-                    ).then(() => {
-                        this.inDB = true;
-                        resolve(this);
-                    }).catch((err) => reject(err));
-                }
+                resolve(this);
             }).catch((err) => reject(err));
         });
     }

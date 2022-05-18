@@ -9,6 +9,20 @@ app.listen(process.env.HTTPS_PORT, async () => {
     console.log('Starting server');
     await createTables();
 
-    let user = await User.findByEmail('yahyaarakil@gmail.com');
+    let user = await User.findByEmail('oguzkaganaltas@gmail.com');
     console.log(user);
+
+    // let user = new User({
+    //     Email: 'oguzkaganaltas@gmail.com',
+    //     Password: 'lol123',
+    //     FullName: 'Oguz Kagan Altas',
+    //     Role: 0,
+    //     TelephoneNumbers: [
+    //         '1',
+    //         '2'
+    //     ]
+    // });
+    // console.log(user);
+    // await user.save();
+    // console.log(user);
 });

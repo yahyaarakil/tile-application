@@ -59,6 +59,7 @@ tableCreators = [
             BakingDuration TIME,
             BakingTemp FLOAT,
             PreviousVersion INT,
+            Approved BOOLEAN,
 
             PRIMARY KEY (ID),
             FOREIGN KEY (PreviousVersion) REFERENCES Recipes(ID),
@@ -77,7 +78,6 @@ tableCreators = [
     async () => {
         return await dbConnection.makeQuery(`CREATE TABLE IF NOT EXISTS UnapprovedRecipes (
             ID INT NOT NULL,
-            ApprovalDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
             CorrectionRequested TEXT,
             IsRejected BOOLEAN NOT NULL DEFAULT 0,

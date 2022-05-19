@@ -356,17 +356,19 @@ app.listen(process.env.HTTPS_PORT, async () => {
 
     //------------------------------------------------------------------
 
+    
+
     //------------------------------------------------------------------
     console.log(await Material.getMaterials(0,1));
     console.log(await Material.findByCode(3));
     console.log(await Material.getMaterialsCount());
 
-    // try {
-    //     let a = await Recipe.findRecipesContainsMaterialCode(1);
-    //     console.log(a)
-    // } catch (error) {
-    //     console.log("it is in DB");
-    // }
+    try {
+        let a = await Recipe.findRecipesContainsMaterialCode(3,0,10);
+        console.log(a)
+    } catch (error) {
+        console.log("it is in DB");
+    }
 
 
 });

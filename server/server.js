@@ -5,7 +5,7 @@ const User = require('./db/models/user');
 const Deparment = require('./db/models/department');
 const Recipe = require('./db/models/recipe');
 const Material = require('./db/models/material');
-
+const Comment = require('./db/models/comment');
 const app = express();
 
 app.listen(process.env.HTTPS_PORT, async () => {
@@ -31,7 +31,7 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // console.log(user);
     
     // let user = await User.findByEmail('oguzkaganaltas@gmail.com');
-    let user = await User.findBySessionID('123');
+    // let user = await User.findBySessionID('123');
     // let user = new User({
     //     Email: 'oguzkaganaltas@gmail.com',
     //     Password: 'lol123',
@@ -68,6 +68,22 @@ app.listen(process.env.HTTPS_PORT, async () => {
     //     BakingTemp: 50
     // });
     // await recipe.save();
+
+    let user = await User.findByEmail("oguzkaganaltas@gmail.com");
+
+    let recipe = await Recipe.findByID(1);
+
+    console.log(user);
+    console.log(recipe);
+
+    let comment = new Comment({
+        Comment: "very good",
+        Manager: user,
+        Recipe: recipe
+    })
+    await comment.save();
+
+
     // let recipe1 = await Recipe.findByID(1);
     // let recipe2 = await Recipe.findByID(2);
     // recipe2.previousVersion = recipe1;

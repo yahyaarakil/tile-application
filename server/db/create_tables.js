@@ -108,7 +108,7 @@ tableCreators = [
 
             PRIMARY KEY (ByManager, RecipeID),
             FOREIGN KEY (ByManager) REFERENCES TileUsers(Email),
-            FOREIGN KEY (RecipeID) REFERENCES Recipes(ID)
+            FOREIGN KEY (RecipeID) REFERENCES UnapprovedRecipes(ID)
         );`);
     },
     async () => {

@@ -88,7 +88,7 @@ class Recipe {
     static async getRecipes(from, to, approved = false) {
         try {
             let count = to - from + 1;
-            let [results] = await dbConnection.makeQuery('SELECT * FROM Recipes WHERE Approved=? ORDER BY CreationDate OFFSET ? ROWS FETCH NEXT ? ROWS ONLY', [ approved, from, count ]);
+            let [results] = await dbConnection.makeQuery('SELECT * FROM Recipes WHERE Approved=? ORDER BY CreationDate LIMIT ?, ?', [ approved, from, count ]);
             return Recipe.constructRecipes(results);
         } catch (error) {
             throw error;
@@ -97,6 +97,7 @@ class Recipe {
 
     static async findRecipesContainsMaterialCode(matreialKey) {
         try {
+            let count = to - from + 1;
             let [results] = await dbConnection.makeQuery(`
             (SELECT r.*
                 FROM Recipes r
@@ -108,7 +109,9 @@ class Recipe {
                 FROM Recipes r
                 JOIN ContainsPaints cp ON r.ID = cp.RecipeID
                 JOIN Materials m ON cp.MaterialCode = m.Code
-                WHERE m.Code = ?)`, [matreialKey,matreialKey]);
+                WHERE m.Code = ?)
+                ORDER BY CreationDate
+                LIMIT ?, ?`, [ matreialKey, matreialKey, from, count ]);
             return Recipe.constructRecipes(results);
         } catch (error) {
             throw error;
@@ -118,7 +121,7 @@ class Recipe {
     static async findRecipesByName(from, to, name = "") {
         try {
             let count = to - from + 1;
-            let [results] = await dbConnection.makeQuery('SELECT * FROM Recipes WHERE Name LIKE ? ORDER BY CreationDate OFFSET ? ROWS FETCH NEXT ? ROWS ONLY', [ `%${name}%` ]);
+            let [results] = await dbConnection.makeQuery('SELECT * FROM Recipes WHERE Name LIKE ? ORDER BY CreationDate LIMIT ?, ?', [ `%${name}%`, from, count ]);
             return Recipe.constructRecipes(results);
         } catch (error) {
             throw error;

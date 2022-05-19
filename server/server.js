@@ -4,12 +4,28 @@ const createTables = require('./db/create_tables').createTables;
 const User = require('./db/models/user');
 const Deparment = require('./db/models/department');
 const Recipe = require('./db/models/recipe');
+const Material = require('./db/models/material');
 
 const app = express();
 
 app.listen(process.env.HTTPS_PORT, async () => {
     console.log('Starting server');
     await createTables();
+
+
+    // let material = new Material({
+    //     Code: 3,
+    //     Company: "Comadsadpany My",
+    //     Name: "Boyasdasa",
+    //     Price: 123,
+    //     Alternative: {
+    //         Code:1
+    //     }
+    // });
+
+    // console.log(material);
+    // await material.save();
+    // console.log(material);
 
     // let user = await User.findByEmail('oguzkaganaltas@gmail.com');
     // console.log(user);

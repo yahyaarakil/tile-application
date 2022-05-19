@@ -59,6 +59,7 @@ tableCreators = [
             BakingDuration TIME,
             BakingTemp FLOAT,
             PreviousVersion INT,
+            Approved BOOLEAN,
 
             PRIMARY KEY (ID),
             FOREIGN KEY (PreviousVersion) REFERENCES Recipes(ID),
@@ -77,7 +78,6 @@ tableCreators = [
     async () => {
         return await dbConnection.makeQuery(`CREATE TABLE IF NOT EXISTS UnapprovedRecipes (
             ID INT NOT NULL,
-            ApprovalDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
             CorrectionRequested TEXT,
             IsRejected BOOLEAN NOT NULL DEFAULT 0,
@@ -151,7 +151,7 @@ module.exports = {
                 console.log(`Failed to create TABLE ${index}: ${err}`);
             }
         }
-        console.log('Created all tables successfully');
+        console.log('Created tables');
         return true;
     }
 }

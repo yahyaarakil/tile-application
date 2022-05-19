@@ -44,7 +44,7 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // });
     // console.log(user);
     // await user.save();
-    // console.log(user);
+    console.log(user);
 
     // let dept = new Deparment({
     //     Name: 'RD',
@@ -55,7 +55,7 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // console.log(dept);
 
     // let recipe = new Recipe({
-    //     Name: 'recipe2',
+    //     Name: 'recipe4',
     //     Size: '3x3',
     //     CreatedBy: user,
     //     MoldShape: 'moldshape1',
@@ -85,8 +85,11 @@ app.listen(process.env.HTTPS_PORT, async () => {
 
 
     // let recipe1 = await Recipe.findByID(1);
+
     // let recipe2 = await Recipe.findByID(2);
     // recipe2.previousVersion = recipe1;
-    // recipe2.save();
-    // console.log(recipe2);
+    // recipe.unapproval.isRejected = true;
+    recipe.approved = true;
+    await recipe.save();
+    console.log(recipe);
 });

@@ -61,13 +61,13 @@ class Recipe {
         }
     }
 
-    static constructRecipes(results) {
+    static async constructRecipes(results) {
         if (results.length > 0) {
             let recipes = [];
             for (let index = 0; index < results.length; index++) {
                 const recipe = results[index];
                 recipe.inDB = true;
-                recipes.push(Recipe.constructRecipe(recipe));
+                recipes.push(await Recipe.constructRecipe(recipe));
             }
             return recipes;
         }
@@ -89,7 +89,7 @@ class Recipe {
         try {
             let count = to - from + 1;
             let [results] = await dbConnection.makeQuery('SELECT * FROM Recipes WHERE Approved=? ORDER BY CreationDate LIMIT ?, ?', [ approved, from, count ]);
-            return Recipe.constructRecipes(results);
+            return await Recipe.constructRecipes(results);
         } catch (error) {
             throw error;
         }
@@ -112,7 +112,7 @@ class Recipe {
                 WHERE m.Code = ?)
                 ORDER BY CreationDate
                 LIMIT ?, ?`, [ matreialKey, matreialKey, from, count ]);
-            return Recipe.constructRecipes(results);
+            return await Recipe.constructRecipes(results);
         } catch (error) {
             throw error;
         }
@@ -122,7 +122,7 @@ class Recipe {
         try {
             let count = to - from + 1;
             let [results] = await dbConnection.makeQuery('SELECT * FROM Recipes WHERE Name LIKE ? ORDER BY CreationDate LIMIT ?, ?', [ `%${name}%`, from, count ]);
-            return Recipe.constructRecipes(results);
+            return await Recipe.constructRecipes(results);
         } catch (error) {
             throw error;
         }

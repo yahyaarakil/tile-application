@@ -151,7 +151,7 @@ module.exports = {
                 console.log(`Failed to create TABLE ${index}: ${err}`);
             }
         }
-        console.log('Created all tables successfully');
+        console.log('Created tables');
         return true;
     }
 }

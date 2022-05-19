@@ -15,7 +15,7 @@ tableCreators = [
    async () => {
         return await dbConnection.makeQuery(`CREATE TABLE IF NOT EXISTS SessionIDs (
             Email VARCHAR(50) NOT NULL,
-            SessionID VARCHAR(1000) NOT NULL,
+            SessionID VARCHAR(256) NOT NULL,
 
             PRIMARY KEY (Email, SessionID),
             FOREIGN KEY (Email) REFERENCES TileUsers(Email)
@@ -108,7 +108,7 @@ tableCreators = [
 
             PRIMARY KEY (ByManager, RecipeID),
             FOREIGN KEY (ByManager) REFERENCES TileUsers(Email),
-            FOREIGN KEY (RecipeID) REFERENCES Recipes(ID)
+            FOREIGN KEY (RecipeID) REFERENCES UnapprovedRecipes(ID)
         );`);
     },
     async () => {

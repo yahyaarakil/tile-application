@@ -1,4 +1,5 @@
 const dbConnection = require('../db_connection');
+const User = require('./user');
 
 class Comment {
     constructor({ Manager, Recipe, Comment, Date, inDB }) {
@@ -7,6 +8,36 @@ class Comment {
         this.comment = Comment;
         this.date = Date;
         this.inDB = inDB ? inDB : false;
+    }
+
+    static async getAllCommentsOfRecipe(recipe) {
+        try {
+            let [results] = await dbConnection.makeQuery('SELECT * FROM Comments WHERE RecipeID=?', [ recipe.id ]);
+            if (results.length > 0) {
+                let comments = [];
+                for (let index = 0; index < results.length; index++) {
+                    const comment = results[index];
+                    let manager = await User.findByEmail(comment.ByManager);
+                    comments.push(new Comment({ manager: manager, recipe: recipe, comment: comment.Comment, date: comment.Date, inDB: true}));
+                }
+                return comments;
+            } else {
+                return [];
+            }
+        } catch (error) {
+            throw (error);
+        }
+    }
+
+    async delete() {
+        try {
+            if (this.inDB) {
+                await dbConnection.makeQuery('DELETE FROM Comments WHERE ByManager=? AND RecipeID=?', [ this.manager.email, this.recipe.id, ]);
+            }
+            this.inDB = false;
+        } catch (error) {
+            throw error;
+        }
     }
 
     async save() {

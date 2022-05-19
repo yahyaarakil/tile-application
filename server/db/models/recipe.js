@@ -5,7 +5,11 @@ const ContainsPaint = require('./containsPaint');
 
 class Recipe {
     constructor ({
-        ID, Name, Size, CreationDate, inDB, CreatedBy, PreviousVersion, MoldShape, BakerName, InitTemp, Humidity, DryingDuration, DryingTemp, BakingDuration, BakingTemp, Approved, Approval, Unapproval}) {
+        ID, Name, Size, CreationDate, inDB, CreatedBy, PreviousVersion,
+        MoldShape, BakerName, InitTemp, Humidity, DryingDuration, DryingTemp,
+        BakingDuration, BakingTemp, Approved, Approval, Unapproval,
+        Materials, Paints,
+    }) {
         this.id = ID;
         this.name = Name;
         this.size = Size;
@@ -29,8 +33,8 @@ class Recipe {
         this.isRejected = Unapproval ? Unapproval.IsRejected : false;
         this.rejectionDate = Unapproval ? Unapproval.RejectionDate : null;
 
-        this.materials = [];
-        this.paints = [];
+        this.materials = Materials ? Materials : [];
+        this.paints = Paints ? Paints : [];
 
         this.inDB = inDB ? inDB : false;
     }
@@ -48,6 +52,9 @@ class Recipe {
         } else {
             recipe.Unapproval = await dbConnection.makeQuery('SELECT * FROM UnapprovedRecipes WHERE ID=?', [ recipe.ID ])[0];
         }
+        // populate materials and paints
+        recipe.paints = ContainsPaint.findMaterialsByRecipe(recipe);        
+        recipe.materials = ContainsMaterial.findMaterialsByRecipe(recipe);        
         return new Recipe(recipe);
     }
 
@@ -172,17 +179,27 @@ class Recipe {
             }
 
             if (this.approved) {
-                // if approved remove all comments
-                await dbConnection.makeQuery('DELETE FROM Comments WHERE RecipeID=?;', [ this.id ]);
             }
 
-            await dbConnection.makeQuery('DELETE FROM ApprovedRecipes WHERE ID=?;', [ this.id ]);
-            await dbConnection.makeQuery('DELETE FROM UnapprovedRecipes WHERE ID=?;', [ this.id ]);
-
             if (this.approved) {
+                // if approved remove all comments
+                await dbConnection.makeQuery('DELETE FROM Comments WHERE RecipeID=?;', [ this.id ]);
+
+                await dbConnection.makeQuery('DELETE FROM ApprovedRecipes WHERE ID=?;', [ this.id ]);
+                await dbConnection.makeQuery('DELETE FROM UnapprovedRecipes WHERE ID=?;', [ this.id ]);
+
                 await dbConnection.makeQuery('INSERT INTO ApprovedRecipes (ID) VALUES (?);', [ this.id ]);
             } else {
-                await dbConnection.makeQuery('INSERT INTO UnapprovedRecipes (ID, CorrectionRequested, IsRejected, RejectionDate) VALUES (?, ?, ?, ?);', [ this.id, this.correctionRequested, this.isRejected, this.rejectionDate ]);
+                await dbConnection.makeQuery('DELETE FROM ApprovedRecipes WHERE ID=?;', [ this.id ]);
+                try {
+                    await dbConnection.makeQuery('INSERT INTO UnapprovedRecipes (ID, CorrectionRequested, IsRejected, RejectionDate) VALUES (?, ?, ?, ?);', [ this.id, this.correctionRequested, this.isRejected, this.rejectionDate ]);
+                } catch (error) {
+                    if (error.errno === 1062) {
+                        await dbConnection.makeQuery('UPDATE UnapprovedRecipes SET ID=?, CorrectionRequested=?, IsRejected=?, RejectionDate=?;', [ this.id, this.correctionRequested, this.isRejected, this.rejectionDate ]);
+                    } else {
+                        throw error;
+                    }
+                }
             }
 
             for (let index = 0; index < this.materials.length; index++) {

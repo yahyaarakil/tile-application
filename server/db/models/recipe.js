@@ -100,11 +100,6 @@ class Recipe {
                 );
                 await dbConnection.makeQuery('DELETE FROM ApprovedRecipes WHERE ID=?;', [ this.id ]);
                 await dbConnection.makeQuery('DELETE FROM UnapprovedRecipes WHERE ID=?;', [ this.id ]);
-                if (this.approved) {
-                    await dbConnection.makeQuery('INSERT INTO ApprovedRecipes (ID) VALUES (?);', [ this.id ]);
-                } else {
-                    await dbConnection.makeQuery('INSERT INTO UnapprovedRecipes (ID, CorrectionRequested, IsRejected) VALUES (?, ?, ?);', [ this.id, this.correctionRequested, this.isRejected ]);
-                }
             } else {
                 let [res] = await dbConnection.makeQuery(
                     'INSERT INTO Recipes (Name, Size, CreatedBy, PreviousVersion, MoldShape, BakerName, InitTemp, Humidity, DryingDuration, DryingTemp, BakingDuration , BakingTemp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
@@ -112,11 +107,11 @@ class Recipe {
                 );
                 this.id = res.insertId;
                 this.inDB = true;
-                if (this.approved) {
-                    await dbConnection.makeQuery('INSERT INTO ApprovedRecipes (ID) VALUES (?);', [ this.id ]);
-                } else {
-                    await dbConnection.makeQuery('INSERT INTO UnapprovedRecipes (ID, CorrectionRequested, IsRejected) VALUES (?, ?, ?);', [ this.id, this.correctionRequested, this.isRejected ]);
-                }
+            }
+            if (this.approved) {
+                await dbConnection.makeQuery('INSERT INTO ApprovedRecipes (ID) VALUES (?);', [ this.id ]);
+            } else {
+                await dbConnection.makeQuery('INSERT INTO UnapprovedRecipes (ID, CorrectionRequested, IsRejected) VALUES (?, ?, ?);', [ this.id, this.correctionRequested, this.isRejected ]);
             }
             return this;
         } catch (err) {

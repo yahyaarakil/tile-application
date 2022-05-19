@@ -17,8 +17,8 @@ class Material {
                 let material = results[0];
                 material.inDB = true;
 
-                if (material.alternative !== null) {
-                    material.alternative = await Material.findByCode(material.alternative.Code);
+                if (material.Alternative !== null) {
+                    material.Alternative = await Material.findByCode(material.Alternative);
                 }
                 return new Material(material);
             }
@@ -31,6 +31,11 @@ class Material {
         }
     }
 
+    static async findAll() {
+        let [results] = await dbConnection.makeQuery("SELECT * FROM Materials");
+        return results;
+    }
+
     static async findByCode(code) {
         return await this.findBy('Code', code);
     }
@@ -38,15 +43,16 @@ class Material {
     async save() {
         try {
             if (this.inDB) {
-                await dbConnection.makeQuery('UPDATE Materials SET Company=?, Name=?, Price=?, Alternative=?, WHERE Code=?;', [this.company, this.name, this.price, this.alternative.Code, this.code]);
-            } else {
+                await dbConnection.makeQuery('UPDATE Materials SET Company=?, Name=?, Price=?, Alternative=?, WHERE Code=?;', [this.company, this.name, this.price, this.alternative.code, this.code]);
+            } 
+            else {
                 await dbConnection.makeQuery(
                     'INSERT INTO Materials (Code, Company, Name, Price, Alternative) VALUES (?, ?, ?, ?, ?);',
-                    [this.code, this.company, this.name, this.price, this.alternative.Code]
+                    [this.code, this.company, this.name, this.price, this.alternative ? this.alternative.code : null]
                 );
                 this.inDB = true;
             }
-
+            return this;
         } catch (error) {
             throw error;
         }

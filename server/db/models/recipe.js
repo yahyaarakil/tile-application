@@ -56,6 +56,39 @@ class Recipe {
         }
     }
 
+    static async findRecipesContainsMaterialCode(matreialKey) {
+        try {
+            let [results] = await dbConnection.makeQuery(`
+            (SELECT r.*
+                FROM Recipes r
+                JOIN ContainsMaterials ci ON r.ID = ci.RecipeID
+                JOIN Materials m ON ci.MaterialCode = m.Code
+                WHERE m.Code = ?)
+                UNION ALL
+                (SELECT r.*
+                FROM Recipes r
+                JOIN ContainsPaints cp ON r.ID = cp.RecipeID
+                JOIN Materials m ON cp.MaterialCode = m.Code
+                WHERE m.Code = ?)`, [matreialKey,matreialKey]);
+
+            if (results.length > 0) {
+                let recipes = [];
+                for (let index = 0; index < results.length; index++) {
+                    const recipe = results[index];
+                    recipe.inDB = true;
+                    recipes.push(new Recipe(recipe));
+                }
+                return recipes;
+            }
+            else {
+                return [];
+            }
+
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async save() {
         try {
             if (this.inDB) {

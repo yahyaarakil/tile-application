@@ -14,17 +14,21 @@ class ContainsPaint{
             let [results] = await dbConnection.makeQuery(`
             SELECT r.*
                 FROM Recipes r
-                JOIN ContainsPaint cp ON r.ID = cp.RecipeID
+                JOIN ContainsPaints cp ON r.ID = cp.RecipeID
                 JOIN Materials m ON cp.MaterialCode = m.Code
             WHERE m.Code =?`,[matreialKey]);
 
             if (results.length > 0) {
-                let recipe = results[0];
-                recipe.inDB = true;
-                return new Recipe(recipe);
+                let recipes = [];
+                for (let index = 0; index < results.length; index++) {
+                    const recipe = results[index];
+                    recipe.inDB = true;
+                    recipes.push(new Recipe(recipe));
+                }
+                return recipes;
             }
             else {
-                return null;
+                return [];
             }
 
         } catch (error) {

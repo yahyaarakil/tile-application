@@ -79,7 +79,7 @@ tableCreators = [
         return await dbConnection.makeQuery(`CREATE TABLE IF NOT EXISTS UnapprovedRecipes (
             ID INT NOT NULL,
             
-            RejectionDate TIMESTAMP DEFAULT NULL,
+            RejectionDate TIMESTAMP,
             CorrectionRequested TEXT,
             IsRejected BOOLEAN NOT NULL DEFAULT 0,
 
@@ -144,15 +144,19 @@ tableCreators = [
 
 module.exports = {
     createTables: async () => {
+        console.log(`Creating ${tableCreators.length} tables`);
+        let failed = 0;
         for (let index = 0; index < tableCreators.length; index++) {
             const creatorFunction = tableCreators[index];
             try {
                 await creatorFunction();
             } catch (err) {
-                console.log(`Failed to create TABLE ${index}: ${err}`);
+                console.log(`Failed to create TABLE ${index+1}: ${err}`);
+                failed += 1;
             }
         }
         console.log('Created tables');
+        console.log(`${failed} tables failed to create`);
         return true;
     }
 }

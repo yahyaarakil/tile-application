@@ -9,7 +9,7 @@ class ContainsPaint {
         this.inDB = inDB ? inDB : false;
     }
 
-    static findRecipesContainsMaterialCode(matreialKey) {
+    static findRecipesContainsPaintCode(matreialKey) {
         try {
             let [results] = await dbConnection.makeQuery(`
             SELECT r.*

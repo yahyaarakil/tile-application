@@ -78,7 +78,8 @@ tableCreators = [
     async () => {
         return await dbConnection.makeQuery(`CREATE TABLE IF NOT EXISTS UnapprovedRecipes (
             ID INT NOT NULL,
-
+            
+            RejectionDate TIMESTAMP DEFAULT NULL,
             CorrectionRequested TEXT,
             IsRejected BOOLEAN NOT NULL DEFAULT 0,
 

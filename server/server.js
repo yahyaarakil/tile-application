@@ -59,12 +59,12 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // let materialX = await Material.findByCode(3);
     // console.log(materialX);
 
-    try {
-        let a = await Recipe.findRecipesContainsMaterialCode(1);
-        console.log(a)
-    } catch (error) {
-        console.log("it is in DB");
-    }
+    // try {
+    //     let a = await Recipe.findRecipesContainsMaterialCode(1);
+    //     console.log(a)
+    // } catch (error) {
+    //     console.log("it is in DB");
+    // }
 
     // let user = await User.findByEmail('oguzkaganaltas@gmail.com');
     // console.log(user);
@@ -131,4 +131,10 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // recipe.approved = true;
     // await recipe.save();
     // console.log(recipe);
+
+    let recipe = await Recipe.findByID(8);
+    recipe.isRejected = true;
+    recipe.rejectionDate = Date.now();
+    await recipe.save();
+    console.log(recipe);
 });

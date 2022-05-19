@@ -25,8 +25,25 @@ class Recipe {
         this.approvalDate = Approval ? Approval.ApprovalDate : null;
         this.correctionRequested = Unapproval ? Unapproval.CorrectionRequested : null;
         this.isRejected = Unapproval ? Unapproval.IsRejected : false;
+        this.rejectionDate = Unapproval ? Unapproval.RejectionDate : null;
 
         this.inDB = inDB ? inDB : false;
+    }
+
+    static async constructRecipe(recipe) {
+        // populate previous version
+        if (recipe.PreviousVersion !== null) {
+            recipe.PreviousVersion = await Recipe.findByID(recipe.PreviousVersion);
+        }
+        // populate createdBy
+        recipe.CreatedBy = await User.findByEmail(recipe.CreatedBy);
+        // populate approval
+        if (recipe.Approved) {
+            recipe.Approval = await dbConnection.makeQuery('SELECT * FROM ApprovedRecipes WHERE ID=?', [ recipe.ID ])[0];
+        } else {
+            recipe.Unapproval = await dbConnection.makeQuery('SELECT * FROM UnapprovedRecipes WHERE ID=?', [ recipe.ID ])[0];
+        }
+        return new Recipe(recipe);
     }
 
     static async findByID(value) {
@@ -35,19 +52,7 @@ class Recipe {
             if (results.length > 0) {
                 let recipe = results[0];
                 recipe.inDB = true;
-                // populate previous version
-                if (recipe.PreviousVersion !== null) {
-                    recipe.PreviousVersion = await Recipe.findByID(recipe.PreviousVersion);
-                }
-                // populate createdBy
-                recipe.CreatedBy = await User.findByEmail(recipe.CreatedBy);
-                // populate approval
-                if (recipe.Approved) {
-                    recipe.Approval = await dbConnection.makeQuery('SELECT * FROM ApprovedRecipes WHERE ID=?', [ recipe.ID ])[0];
-                } else {
-                    recipe.Unapproval = await dbConnection.makeQuery('SELECT * FROM UnapprovedRecipes WHERE ID=?', [ recipe.ID ])[0];
-                }
-                return new Recipe(recipe);
+                return await Recipe.constructRecipe(recipe);
             } else {
                 return null;
             }
@@ -76,7 +81,7 @@ class Recipe {
                 for (let index = 0; index < results.length; index++) {
                     const recipe = results[index];
                     recipe.inDB = true;
-                    recipes.push(new Recipe(recipe));
+                    recipes.push(Recipe.constructRecipe(recipe));
                 }
                 return recipes;
             }
@@ -98,8 +103,6 @@ class Recipe {
                     'UPDATE Recipes SET Name=?, Size=? , CreatedBy=? , PreviousVersion=? , MoldShape=? , BakerName=? , InitTemp=? , Humidity=? , DryingDuration=? , DryingTemp=? , BakingDuration=? , BakingTemp=? WHERE ID=?;',
                     [ this.name, this.size, this.createdBy.email, this.previousVersion?this.previousVersion.id:null, this.moldShape, this.bakerName, this.initTemp, this.humidity, this.dryingDuration, this.dryingTemp, this.bakingDuration, this.bakingTemp, this.id ]
                 );
-                await dbConnection.makeQuery('DELETE FROM ApprovedRecipes WHERE ID=?;', [ this.id ]);
-                await dbConnection.makeQuery('DELETE FROM UnapprovedRecipes WHERE ID=?;', [ this.id ]);
             } else {
                 let [res] = await dbConnection.makeQuery(
                     'INSERT INTO Recipes (Name, Size, CreatedBy, PreviousVersion, MoldShape, BakerName, InitTemp, Humidity, DryingDuration, DryingTemp, BakingDuration , BakingTemp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
@@ -108,10 +111,19 @@ class Recipe {
                 this.id = res.insertId;
                 this.inDB = true;
             }
+
+            if (this.approved) {
+                // if approved remove all comments
+                await dbConnection.makeQuery('DELETE FROM Comments WHERE RecipeID=?;', [ this.id ]);
+            }
+
+            await dbConnection.makeQuery('DELETE FROM ApprovedRecipes WHERE ID=?;', [ this.id ]);
+            await dbConnection.makeQuery('DELETE FROM UnapprovedRecipes WHERE ID=?;', [ this.id ]);
+
             if (this.approved) {
                 await dbConnection.makeQuery('INSERT INTO ApprovedRecipes (ID) VALUES (?);', [ this.id ]);
             } else {
-                await dbConnection.makeQuery('INSERT INTO UnapprovedRecipes (ID, CorrectionRequested, IsRejected) VALUES (?, ?, ?);', [ this.id, this.correctionRequested, this.isRejected ]);
+                await dbConnection.makeQuery('INSERT INTO UnapprovedRecipes (ID, CorrectionRequested, IsRejected, RejectionDate) VALUES (?, ?, ?, ?);', [ this.id, this.correctionRequested, this.isRejected, this.rejectionDate ]);
             }
             return this;
         } catch (err) {

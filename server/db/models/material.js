@@ -10,7 +10,7 @@ class Material {
         this.inDB = inDB ? inDB : false;
     }
 
-    static findBy(key, value) {
+    static async findBy(key, value) {
         try {
             let [results] = await dbConnection.makeQuery(`SELECT * FROM Materials WHERE ${key}=?;`, [value]);
             if (results.length > 0) {

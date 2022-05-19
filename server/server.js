@@ -14,18 +14,57 @@ app.listen(process.env.HTTPS_PORT, async () => {
 
 
     // let material = new Material({
-    //     Code: 3,
-    //     Company: "Comadsadpany My",
-    //     Name: "Boyasdasa",
-    //     Price: 123,
-    //     Alternative: {
-    //         Code:1
-    //     }
+    //     Code: 1,
+    //     Company: "DYO",
+    //     Name: "BOYA",
+    //     Price: 123
     // });
 
-    // console.log(material);
-    // await material.save();
-    // console.log(material);
+    // let material1 = new Material({
+    //     Code: 2,
+    //     Company: "GLAZEMASTER",
+    //     Name: "SIR a",
+    //     Price: 44
+    // });
+
+    // let material2 = new Material({
+    //     Code: 3,
+    //     Company: "GLAZEMASTER",
+    //     Name: "SIR e",
+    //     Price: 542.5,
+    //     Alternative: material1
+    // });
+
+    // try {
+    //     await material.save();
+    // } catch (error) {
+    //     console.log("it is in DB");
+    // }
+
+    // try {
+    //     await material1.save();
+    // } catch (error) {
+    //     console.log("it is in DB");
+    // }
+
+    // try {
+    //     await material2.save();
+    // } catch (error) {
+    //     console.log("it is in DB");
+    // }
+
+    // let materials = await Material.findAll();
+    // console.log(materials);
+
+    // let materialX = await Material.findByCode(3);
+    // console.log(materialX);
+
+    try {
+        let a = await Recipe.findRecipesContainsMaterialCode(1);
+        console.log(a)
+    } catch (error) {
+        console.log("it is in DB");
+    }
 
     // let user = await User.findByEmail('oguzkaganaltas@gmail.com');
     // console.log(user);
@@ -44,7 +83,7 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // });
     // console.log(user);
     // await user.save();
-    console.log(user);
+    // console.log(user);
 
     // let dept = new Deparment({
     //     Name: 'RD',
@@ -69,27 +108,27 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // });
     // await recipe.save();
 
-    let user = await User.findByEmail("oguzkaganaltas@gmail.com");
+    // let user = await User.findByEmail("oguzkaganaltas@gmail.com");
 
-    let recipe = await Recipe.findByID(1);
+    // let recipe = await Recipe.findByID(1);
 
-    console.log(user);
-    console.log(recipe);
+    // console.log(user);
+    // console.log(recipe);
 
-    let comment = new Comment({
-        Comment: "very good",
-        Manager: user,
-        Recipe: recipe
-    })
-    await comment.save();
+    // let comment = new Comment({
+    //     Comment: "very good",
+    //     Manager: user,
+    //     Recipe: recipe
+    // })
+    // await comment.save();
 
 
-    // let recipe1 = await Recipe.findByID(1);
+    // // let recipe1 = await Recipe.findByID(1);
 
-    // let recipe2 = await Recipe.findByID(2);
-    // recipe2.previousVersion = recipe1;
-    // recipe.unapproval.isRejected = true;
-    recipe.approved = true;
-    await recipe.save();
-    console.log(recipe);
+    // // let recipe2 = await Recipe.findByID(2);
+    // // recipe2.previousVersion = recipe1;
+    // // recipe.unapproval.isRejected = true;
+    // recipe.approved = true;
+    // await recipe.save();
+    // console.log(recipe);
 });

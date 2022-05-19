@@ -10,6 +10,21 @@ class Material {
         this.inDB = inDB ? inDB : false;
     }
 
+    static constructMaterials(results) {
+        if (results.length > 0) {
+            let materials = [];
+            for (let index = 0; index < results.length; index++) {
+                const material = results[index];
+                material.inDB = true;
+                materials.push(new Material(material));
+            }
+            return materials;
+        }
+        else {
+            return [];
+        }
+    }
+
     static async findBy(key, value) {
         try {
             let [results] = await dbConnection.makeQuery(`SELECT * FROM Materials WHERE ${key}=?;`, [value]);
@@ -31,9 +46,19 @@ class Material {
         }
     }
 
-    static async findAll() {
-        let [results] = await dbConnection.makeQuery("SELECT * FROM Materials");
-        return results;
+    static async getMaterials(from, to) {
+        let count = to - from + 1;
+        let [results] = await dbConnection.makeQuery('SELECT * FROM Materials ORDER BY Company, Name LIMIT ?, ?', [ from, count ]);
+        return Material.constructMaterials(results);
+    }
+
+    static async getMaterialsCount() {
+        try {
+            let [results] = await dbConnection.makeQuery('SELECT COUNT(Code) AS noMaterials FROM Materials');
+            return results[0].noMaterials;
+        } catch (error) {
+            throw error;
+        }
     }
 
     static async findByCode(code) {

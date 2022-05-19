@@ -1,5 +1,7 @@
 const dbConnection = require('../db_connection');
 const User = require('./user');
+const ContainsMaterial = require('./containsMaterial');
+const ContainsPaint = require('./containsPaint');
 
 class Recipe {
     constructor ({
@@ -26,6 +28,9 @@ class Recipe {
         this.correctionRequested = Unapproval ? Unapproval.CorrectionRequested : null;
         this.isRejected = Unapproval ? Unapproval.IsRejected : false;
         this.rejectionDate = Unapproval ? Unapproval.RejectionDate : null;
+
+        this.materials = [];
+        this.paints = [];
 
         this.inDB = inDB ? inDB : false;
     }
@@ -128,6 +133,26 @@ class Recipe {
         }
     }
 
+    addMaterial(material, { amount, applicationType, waterContent, density, viscosity }) {
+        this.materials.push(new ContainsMaterial({
+            RecipeID: this.id,
+            MaterialCode: material.code,
+            Amount: amount,
+            ApplicationType: applicationType,
+            WaterContent: waterContent, 
+            Density: density,
+            Viscosity: viscosity
+        }));
+    }
+
+    addPaint(material, { grammage }) {
+        this.paints.push(new ContainsPaint({
+            RecipeID: this.id,
+            MaterialCode: material.code,
+            Grammage: grammage
+        }));
+    }
+
     async save() {
         try {
             if (this.inDB) {
@@ -159,6 +184,17 @@ class Recipe {
             } else {
                 await dbConnection.makeQuery('INSERT INTO UnapprovedRecipes (ID, CorrectionRequested, IsRejected, RejectionDate) VALUES (?, ?, ?, ?);', [ this.id, this.correctionRequested, this.isRejected, this.rejectionDate ]);
             }
+
+            for (let index = 0; index < this.materials.length; index++) {
+                const material = this.materials[index];
+                material.save();
+            }
+
+            for (let index = 0; index < this.paints.length; index++) {
+                const paint = this.paints[index];
+                paint.save();
+            }
+
             return this;
         } catch (err) {
             throw err;

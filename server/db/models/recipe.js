@@ -61,6 +61,40 @@ class Recipe {
         }
     }
 
+    static constructRecipes(results) {
+        if (results.length > 0) {
+            let recipes = [];
+            for (let index = 0; index < results.length; index++) {
+                const recipe = results[index];
+                recipe.inDB = true;
+                recipes.push(Recipe.constructRecipe(recipe));
+            }
+            return recipes;
+        }
+        else {
+            return [];
+        }
+    }
+
+    static async getRecipesCount(approved = false) {
+        try {
+            let [results] = await dbConnection.makeQuery('SELECT COUNT(ID) AS noRecipes FROM Recipes WHERE Approved=?', [ approved ]);
+            return results[0].noRecipes;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async getRecipes(from, to, approved = false) {
+        try {
+            let count = to - from + 1;
+            let [results] = await dbConnection.makeQuery('SELECT * FROM Recipes WHERE Approved=? ORDER BY CreationDate OFFSET ? ROWS FETCH NEXT ? ROWS ONLY', [ approved, from, count ]);
+            return Recipe.constructRecipes(results);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async findRecipesContainsMaterialCode(matreialKey) {
         try {
             let [results] = await dbConnection.makeQuery(`
@@ -75,20 +109,7 @@ class Recipe {
                 JOIN ContainsPaints cp ON r.ID = cp.RecipeID
                 JOIN Materials m ON cp.MaterialCode = m.Code
                 WHERE m.Code = ?)`, [matreialKey,matreialKey]);
-
-            if (results.length > 0) {
-                let recipes = [];
-                for (let index = 0; index < results.length; index++) {
-                    const recipe = results[index];
-                    recipe.inDB = true;
-                    recipes.push(Recipe.constructRecipe(recipe));
-                }
-                return recipes;
-            }
-            else {
-                return [];
-            }
-
+            return Recipe.constructRecipes(results);
         } catch (error) {
             throw error;
         }

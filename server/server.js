@@ -131,10 +131,10 @@ app.listen(process.env.HTTPS_PORT, async () => {
     // recipe.approved = true;
     // await recipe.save();
     // console.log(recipe);
-
-    let recipe = await Recipe.findByID(8);
-    recipe.isRejected = true;
-    recipe.rejectionDate = Date.now();
-    await recipe.save();
-    console.log(recipe);
+    await Recipe.getRecipesCount();
+    // let recipe = await Recipe.findByID(8);
+    // recipe.isRejected = true;
+    // recipe.rejectionDate = Date.now();
+    // await recipe.save();
+    // console.log(recipe);
 });

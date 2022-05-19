@@ -18,7 +18,7 @@ class Material {
                 material.inDB = true;
 
                 if (material.alternative !== null) {
-                    material.alternative = await Material.findByCode(material.alternative);
+                    material.alternative = await Material.findByCode(material.alternative.Code);
                 }
                 return new Material(material);
             }
@@ -38,11 +38,11 @@ class Material {
     async save() {
         try {
             if (this.inDB) {
-                await dbConnection.makeQuery('UPDATE Materials SET Code=?, Company=?, Name=?, Price=?, Alternative=?, WHERE Code=?;', [this.code, this.company, this.name, this.price, this.alternative, this.code]);
+                await dbConnection.makeQuery('UPDATE Materials SET Company=?, Name=?, Price=?, Alternative=?, WHERE Code=?;', [this.company, this.name, this.price, this.alternative.Code, this.code]);
             } else {
                 await dbConnection.makeQuery(
                     'INSERT INTO Materials (Code, Company, Name, Price, Alternative) VALUES (?, ?, ?, ?, ?);',
-                    [this.code, this.company, this.name, this.price, this.alternative]
+                    [this.code, this.company, this.name, this.price, this.alternative.Code]
                 );
                 this.inDB = true;
             }
@@ -54,3 +54,4 @@ class Material {
 
 
 }
+module.exports = Material;

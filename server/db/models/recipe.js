@@ -115,6 +115,16 @@ class Recipe {
         }
     }
 
+    static async findRecipesByName(from, to, name = "") {
+        try {
+            let count = to - from + 1;
+            let [results] = await dbConnection.makeQuery('SELECT * FROM Recipes WHERE Name LIKE ? ORDER BY CreationDate OFFSET ? ROWS FETCH NEXT ? ROWS ONLY', [ `%${name}%` ]);
+            return Recipe.constructRecipes(results);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async save() {
         try {
             if (this.inDB) {

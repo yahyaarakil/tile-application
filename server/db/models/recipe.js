@@ -140,6 +140,19 @@ class Recipe {
         }
     }
 
+    static async findRecipesCommentedBy(manager, from, to){
+        try {
+            let count = to - from + 1;
+            let [results] = await dbConnection.makeQuery(
+                'SELECT r.*, c.Comment FROM comments c JOIN recipes r on r.ID = c.RecipeID where c.ByManager=? ORDER BY CreationDate LIMIT ?, ?',
+                [manager.email, from, count ]
+                );
+            return await results;//Recipe.constructRecipes(results);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     addMaterial(material, { amount, applicationType, waterContent, density, viscosity }) {
         this.materials.push(new ContainsMaterial({
             RecipeID: this.id,
@@ -163,8 +176,6 @@ class Recipe {
     async save() {
         try {
             if (this.inDB) {
-                console.log("HERE")
-                console.log(this)
                 await dbConnection.makeQuery(
                     'UPDATE Recipes SET Name=?, Size=? , CreatedBy=? , PreviousVersion=? , MoldShape=? , BakerName=? , InitTemp=? , Humidity=? , DryingDuration=? , DryingTemp=? , BakingDuration=? , BakingTemp=?, Approved=? WHERE ID=?;',
                     [ this.name, this.size, this.createdBy.email, this.previousVersion?this.previousVersion.id:null, this.moldShape, this.bakerName, this.initTemp, this.humidity, this.dryingDuration, this.dryingTemp, this.bakingDuration, this.bakingTemp, this.approved, this.id ]

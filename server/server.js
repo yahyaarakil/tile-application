@@ -357,18 +357,23 @@ app.listen(process.env.HTTPS_PORT, async () => {
     //------------------------------------------------------------------
 
     
+    try {
+        console.log(await Recipe.findRecipesCommentedBy(user,0,10));
+    } catch (error) {
+        console.log("error"+ error);
+    }
 
     //------------------------------------------------------------------
-    console.log(await Material.getMaterials(0,1));
-    console.log(await Material.findByCode(3));
-    console.log(await Material.getMaterialsCount());
+    // console.log(await Material.getMaterials(0,1));
+    // console.log(await Material.findByCode(3));
+    // console.log(await Material.getMaterialsCount());
 
-    try {
-        let a = await Recipe.findRecipesContainsMaterialCode(3,0,10);
-        console.log(a)
-    } catch (error) {
-        console.log("it is in DB");
-    }
+    // try {
+    //     let a = await Recipe.findRecipesContainsMaterialCode(3,0,10);
+    //     console.log(a)
+    // } catch (error) {
+    //     console.log("it is in DB");
+    // }
 
 
 });

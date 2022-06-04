@@ -107,7 +107,7 @@ class Recipe {
         }
     }
 
-    static async findRecipesContainsMaterialCode(matreialKey) {
+    static async findRecipesContainsMaterialCode(matreialKey, from, to) {
         try {
             let count = to - from + 1;
             let [results] = await dbConnection.makeQuery(`
@@ -140,6 +140,19 @@ class Recipe {
         }
     }
 
+    static async findRecipesCommentedBy(manager, from, to){
+        try {
+            let count = to - from + 1;
+            let [results] = await dbConnection.makeQuery(
+                'SELECT r.*, c.Comment FROM comments c JOIN recipes r on r.ID = c.RecipeID where c.ByManager=? ORDER BY CreationDate LIMIT ?, ?',
+                [manager.email, from, count ]
+                );
+            return await results;//Recipe.constructRecipes(results);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     addMaterial(material, { amount, applicationType, waterContent, density, viscosity }) {
         this.materials.push(new ContainsMaterial({
             RecipeID: this.id,
@@ -163,16 +176,14 @@ class Recipe {
     async save() {
         try {
             if (this.inDB) {
-                console.log("HERE")
-                console.log(this)
                 await dbConnection.makeQuery(
-                    'UPDATE Recipes SET Name=?, Size=? , CreatedBy=? , PreviousVersion=? , MoldShape=? , BakerName=? , InitTemp=? , Humidity=? , DryingDuration=? , DryingTemp=? , BakingDuration=? , BakingTemp=? WHERE ID=?;',
-                    [ this.name, this.size, this.createdBy.email, this.previousVersion?this.previousVersion.id:null, this.moldShape, this.bakerName, this.initTemp, this.humidity, this.dryingDuration, this.dryingTemp, this.bakingDuration, this.bakingTemp, this.id ]
+                    'UPDATE Recipes SET Name=?, Size=? , CreatedBy=? , PreviousVersion=? , MoldShape=? , BakerName=? , InitTemp=? , Humidity=? , DryingDuration=? , DryingTemp=? , BakingDuration=? , BakingTemp=?, Approved=? WHERE ID=?;',
+                    [ this.name, this.size, this.createdBy.email, this.previousVersion?this.previousVersion.id:null, this.moldShape, this.bakerName, this.initTemp, this.humidity, this.dryingDuration, this.dryingTemp, this.bakingDuration, this.bakingTemp, this.approved, this.id ]
                 );
             } else {
                 let [res] = await dbConnection.makeQuery(
-                    'INSERT INTO Recipes (Name, Size, CreatedBy, PreviousVersion, MoldShape, BakerName, InitTemp, Humidity, DryingDuration, DryingTemp, BakingDuration , BakingTemp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-                    [ this.name, this.size, this.createdBy.email, this.previousVersion?this.previousVersion.id:null, this.moldShape, this.bakerName, this.initTemp, this.humidity, this.dryingDuration, this.dryingTemp, this.bakingDuration, this.bakingTemp ]
+                    'INSERT INTO Recipes (Name, Size, CreatedBy, PreviousVersion, MoldShape, BakerName, InitTemp, Humidity, DryingDuration, DryingTemp, BakingDuration , BakingTemp, Approved) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                    [ this.name, this.size, this.createdBy.email, this.previousVersion?this.previousVersion.id:null, this.moldShape, this.bakerName, this.initTemp, this.humidity, this.dryingDuration, this.dryingTemp, this.bakingDuration, this.bakingTemp, this.approved ]
                 );
                 this.id = res.insertId;
                 this.inDB = true;
@@ -195,7 +206,7 @@ class Recipe {
                     await dbConnection.makeQuery('INSERT INTO UnapprovedRecipes (ID, CorrectionRequested, IsRejected, RejectionDate) VALUES (?, ?, ?, ?);', [ this.id, this.correctionRequested, this.isRejected, this.rejectionDate ]);
                 } catch (error) {
                     if (error.errno === 1062) {
-                        await dbConnection.makeQuery('UPDATE UnapprovedRecipes SET ID=?, CorrectionRequested=?, IsRejected=?, RejectionDate=?;', [ this.id, this.correctionRequested, this.isRejected, this.rejectionDate ]);
+                        await dbConnection.makeQuery('UPDATE UnapprovedRecipes SET CorrectionRequested=?, IsRejected=?, RejectionDate=?;', [this.correctionRequested, this.isRejected, this.rejectionDate ]);
                     } else {
                         throw error;
                     }

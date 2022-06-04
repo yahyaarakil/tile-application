@@ -1,61 +1,36 @@
 import React from 'react';
-import axios from 'axios';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Navigate } from "react-router-dom";
-
-const database = {
-    "email":"oguzkaganaltas@gmail.com",
-    "password":"123"
-};
-
-
+const User = require("../db/models/user");
 export const LoginPage = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState("");
+    
+    function getUser(email, password){
+        let user;
+        try {
+            user = await User.findByEmail(email);
+            console.log(user);
+        } catch (error) {
+            console.log("error happened");
+        }
 
-    const errRef = useRef();
+        if (user !== null) {
+            if(user.password === password){
+                setSuccess(true);
+            }
+        }else{
+            setErrMsg("Missing Username or Invalid Password!");
+        }
+    } 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(email, password);
-        if (email === database.email && password === database.password) {
-            setSuccess(true);
-        }
-        // try {
-        //     // axios.post(`${process.env.HOST}:${process.env.PORT}/login`,
-        //     //     {
-        //     //         email: email,
-        //     //         password: password,
-        //     //     },
-        //     //     {
-        //     //         headers: { "content-type": "application/json" }
-        //     //     }
-        //     // )
-        //     //     .then(function (response) {
-        //     //         if (response.data === "accessGranted") {
-        //     //             console.log("logging in...");
-        //     //             setSuccess(true);
-        //     //         }
-        //     //     })
-            
-
-        // } catch (err) {
-        //     if (!err?.response) {
-        //         setErrMsg("No Server Response");
-        //     }
-        //     else if (err.response?.status === 400) {
-        //         setErrMsg("Missing Username or Invalid Password!");
-        //     }
-        //     else {
-        //         setErrMsg("Login Failed");
-        //     }
-        //     errRef.current.focus();
-        // }
-
-
+        getUser(email, password);
     }
 
     return (

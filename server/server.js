@@ -363,6 +363,13 @@ app.listen(process.env.HTTPS_PORT, async () => {
         console.log("error"+ error);
     }
 
+    try {
+        user = await User.findByEmail("oguzkaganaltas@gmail.com");
+        console.log(user);
+    } catch (error) {
+        console.log("error happened");
+    }
+
     //------------------------------------------------------------------
     // console.log(await Material.getMaterials(0,1));
     // console.log(await Material.findByCode(3));

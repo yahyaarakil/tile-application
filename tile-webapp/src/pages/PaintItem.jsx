@@ -23,8 +23,8 @@ export const PaintItem = () => {
         }
     ];
 
-    let [paintId, setPaint] = useState("Select a Paint");
-    let [grammage, setGrammage] = useState("");
+    let [paintId, setPaint] = useState();
+    let [grammage, setGrammage] = useState();
 
 
     let handlePaintChange = (e) => {
@@ -36,6 +36,12 @@ export const PaintItem = () => {
     }
 
     console.log(paintId, grammage);
+
+    // function doasd(){
+    //     const Material = require("../../db/models/material");
+    //     let m = new Material({});
+    //     m.save()
+    // } to save;
 
     return (
         <>

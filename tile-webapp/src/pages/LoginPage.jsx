@@ -8,6 +8,7 @@ const database = {
     "password":"123"
 };
 
+
 export const LoginPage = () => {
 
     const [email, setEmail] = useState("");
@@ -20,39 +21,39 @@ export const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(email, password);
-
-        try {
-            axios.post("http://localhost:3001/login",
-                {
-                    email: email,
-                    password: password,
-                },
-                {
-                    headers: { "content-type": "application/json" }
-                }
-            )
-                .then(function (response) {
-                    if (response.data === "accessGranted") {
-                        console.log("logging in...");
-                        setSuccess(true);
-                    }
-                })
-            // if (email === database.email && password === database.password) {
-            //     setSuccess(true);
-            // }
-
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg("No Server Response");
-            }
-            else if (err.response?.status === 400) {
-                setErrMsg("Missing Username or Invalid Password!");
-            }
-            else {
-                setErrMsg("Login Failed");
-            }
-            errRef.current.focus();
+        if (email === database.email && password === database.password) {
+            setSuccess(true);
         }
+        // try {
+        //     // axios.post(`${process.env.HOST}:${process.env.PORT}/login`,
+        //     //     {
+        //     //         email: email,
+        //     //         password: password,
+        //     //     },
+        //     //     {
+        //     //         headers: { "content-type": "application/json" }
+        //     //     }
+        //     // )
+        //     //     .then(function (response) {
+        //     //         if (response.data === "accessGranted") {
+        //     //             console.log("logging in...");
+        //     //             setSuccess(true);
+        //     //         }
+        //     //     })
+            
+
+        // } catch (err) {
+        //     if (!err?.response) {
+        //         setErrMsg("No Server Response");
+        //     }
+        //     else if (err.response?.status === 400) {
+        //         setErrMsg("Missing Username or Invalid Password!");
+        //     }
+        //     else {
+        //         setErrMsg("Login Failed");
+        //     }
+        //     errRef.current.focus();
+        // }
 
 
     }

@@ -14,27 +14,6 @@ const GlazeInput = () => {
 
 const FormItem = () => {
 
-    let dropdownItems = [
-        {
-            "name": "red",
-            "code": 1,
-            "company": "company a",
-            "price": 123
-        },
-        {
-            "name": "green",
-            "code": 2,
-            "company": "company a",
-            "price": 456
-        },
-        {
-            "name": "blue",
-            "code": 3,
-            "company": "company b",
-            "price": 789
-        }
-    ];
-
     let [paintId, setPaint] = useState();
     let handlePaintChange = (e) => {
         setPaint(e.target.value);
@@ -53,13 +32,7 @@ const FormItem = () => {
                                 <p>Size</p>
                                 <input type="text" className="form-control" aria-describedby="basic-addon1" />
                                 <p>Mold Shape</p>
-                                <select onChange={handlePaintChange} className="btn">
-
-                                    {
-                                        dropdownItems.map((item) =>
-                                            <option value={item.code}>{item.name + "-" + item.company}</option>)
-                                    }
-                                </select>
+                                <input type="text" className="form-control" aria-describedby="basic-addon1" />
                             </div>
                             <div className="col-6">
                                 <p>Creation Date</p>

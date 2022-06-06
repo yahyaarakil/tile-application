@@ -1,27 +1,24 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export const PaintItem = () => {
 
-    let dropdownItems = [
-        {
-            "name": "red",
-            "code": 1,
-            "company": "company a",
-            "price": 123
-        },
-        {
-            "name": "green",
-            "code": 2,
-            "company": "company a",
-            "price": 456
-        },
-        {
-            "name": "blue",
-            "code": 3,
-            "company": "company b",
-            "price": 789
+    const [materials, setMaterials] = useState([]);
+    
+    const getMaterials = async () => {
+        try {
+            const response = await axios.get('https://aeb157f3-dd85-42fc-9779-3a4328d5a230.mock.pstmn.io/materials');
+            setMaterials(response.data);
+        } catch (err) {
+            console.error(err);
         }
-    ];
+    }
+
+    useEffect(() => {
+        getMaterials();
+    }, []);
+
+    
 
     let [paintId, setPaint] = useState();
     let [grammage, setGrammage] = useState();
@@ -31,36 +28,28 @@ export const PaintItem = () => {
         setPaint(e.target.value);
     };
 
-    let handleGrammage = (e) =>{
+    let handleGrammage = (e) => {
         setGrammage(e.target.value);
     }
 
-    console.log(paintId, grammage);
-
-    // function doasd(){
-    //     const Material = require("../../db/models/material");
-    //     let m = new Material({});
-    //     m.save()
-    // } to save;
-
     return (
         <>
-            <div>
-                <div class="card" style={{ width: "28rem" }}>
-                    <div class="card-body">
-                        <h4 class="card-title">Paint</h4>
-                        <p class="card-text">
+            <div className="paintitem">
+                <div className="card" style={{ width: "28rem" }}>
+                    <div className="card-body">
+                        <h4 className="card-title">Paint</h4>
+                        <p className="card-text">
                             Select a paint and Grammage:
                         </p>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-6">
-                                    <input onInput={handleGrammage} type="number" step="0.01" class="form-control" placeholder="Grammage" aria-describedby="basic-addon1" />
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-6">
+                                    <input onInput={handleGrammage} type="number" step="0.01" className="form-control" placeholder="Grammage" aria-describedby="basic-addon1" />
                                 </div>
-                                <div class="col-6">
-                                    <div class="dropdown">
-                                        <select onChange={handlePaintChange} class="btn btn-secondary">
-                                            {dropdownItems.map((item) => <option value={item.code}>{item.name+"-"+item.company}</option>)}
+                                <div className="col-6">
+                                    <div className="dropdown">
+                                        <select onChange={handlePaintChange} className="btn">
+                                            {materials.map((item) => <option value={item.id}>{item.name + "-" + item.company}</option>)}
                                         </select>
                                     </div>
                                 </div>
@@ -69,9 +58,9 @@ export const PaintItem = () => {
                     </div>
                 </div>
             </div>
-
-
         </>
+        
     );
 }
 export default PaintItem;
+

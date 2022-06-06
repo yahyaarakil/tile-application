@@ -15,8 +15,6 @@ export const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(email, password);
-
         try {
             axios.post("http://localhost:8080/login",
                 {
@@ -28,7 +26,6 @@ export const LoginPage = () => {
                 }
             )
                 .then(function (response) {
-                    console.log(response.data.token)
                     if (response.status === 200) {
                     
                         sessionStorage.setItem('token',JSON.stringify(response.data.token));

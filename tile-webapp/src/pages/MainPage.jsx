@@ -9,52 +9,64 @@ export const MainPage = () => {
             <div className="d-flex" id="wrapper">
                 <div className="border-end bg-white" id="sidebar-wrapper">
                     <div className="list-group list-group-flush">
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3" href={recipeLink}>Recipes</a>
+                        <a className="list-group-item list-group-item-action list-group-item-light p-3" href={recipeLink}>Create Recipe</a>
                         <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
                         <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
                     </div>
                 </div>
                 <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        <div className="container-fluid">
-                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
-                        </div>
-                    </nav>
                     <div className="container-fluid">
-                        <h1 className="mt-4">Ceramic Tile Generator</h1>
-                        <p>Create your tile with given items and the program will handle the rest.</p>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias commodi temporibus doloremque aperiam unde numquam soluta ab excepturi nemo error saepe maxime, laudantium consequuntur suscipit omnis ipsam eligendi voluptatum dignissimos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum sed quisquam ipsa! Inventore aperiam distinctio iste nihil officia laboriosam est a enim minus, quisquam, incidunt sed qui non labore praesentium iure, eveniet velit atque repellendus officiis iusto dolorum nulla magni. Eaque sunt neque odio ipsa, id culpa iure rem incidunt praesentium dolore porro doloremque quae pariatur. Debitis tenetur, eaque eveniet aliquid quam fugiat harum ex quaerat eos ad distinctio, iusto vel excepturi ipsum! Praesentium, consequatur accusantium. Vitae dolore corporis quisquam perferendis ipsum laborum tenetur nam vel suscipit, iste error blanditiis, maxime aperiam. Quasi laboriosam labore, maiores illo sint voluptate aliquid!
-                        </p>
-                    </div>
-                        <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel" >
-                            <ol className="carousel-indicators">
-                                <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                            </ol>
-                            <div className="carousel-inner">
-                                <div className="carousel-item active">
-                                    <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/PEGA-WOOD-MIX-30x120-091221-scaled.jpg" alt="First slide" />
-                                </div>
-                                <div className="carousel-item">
-                                    <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/MONTGOMERY-BLACK-30X120.jpg" alt="Second slide" />
-                                </div>
-                                <div className="carousel-item">
-                                    <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/30X120-LUXEMBURG-scaled.jpg" alt="Third slide" />
-                                </div>
+                        <div className="row">
+                            <div className="col-4" style={{
+                                "display": "flex",
+                                "justify-content": "center"
+                            }}>
+                                <img src="https://www.termalseramik.com/wp-content/uploads/2022/01/logooo.png" alt="Termal Seramik Logo" />
                             </div>
-                            <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span className="sr-only">Previous</span>
-                            </a>
-                            <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span className="sr-only">Next</span>
-                            </a>
+                            <div className="col-4">
+                                <h1 className="mt-4">Ceramic Tile Generator</h1>
+                            </div>
                         </div>
+
+                        <p align="justify">Create your tile with given items and the program will handle the rest.</p>
+
+                        <p align="justify">Ceramic is today's one of the most modern and technological decoration materials and it was used since the beginning of the history.</p>
+
+                        <p align="justify">The foundations of “TermaI Seramik” were laid in Söğüt - Bilecik in 1995, which started to produce ceramics so that customers with different needs and wishes can create the spaces of their dreams by bringing technology, nature and people together. The annual production capacity of Termal Seramik, which started production in its first factory in 1997 and in its second factory in 2005, reached 28,000,000 m2 with the commissioning of its new investment in December 2021.</p>
+
+                        <p align="justify">New investments enabled Termal Seramik to produce Porcelain Floor Tiles of sizes such as 80x80, 60x60, 60x90, 30x120, 60x120, 75x150; Wall Tiles of sizes such as 30x90, 30x75 and Parquet Porcelain Tiles of sizes such as 15x60, 20x90, 30x120. Regular Porcelain Products of sizes such as 30x60, 45x45 and 33x33 and Wall Tiles of sizes such as 30x60, 10x20, 10x40 are being produced as well. Our factory is capable of offering all these products in “rectified” and “non - rectified” solution. Colored body and 20mm thick tile products are also offered to customers.</p>
+
+                        <p align="justify">The products produced in Termal Seramik, which currently produces with approximately 1,300 people and has both national and international certifications, go through detailed production and control stages in accordance with the Total Quality Management.</p>
+
+                    </div>
+                    <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel" >
+                        <ol className="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div className="carousel-inner">
+                            <div className="carousel-item active">
+                                <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/PEGA-WOOD-MIX-30x120-091221-scaled.jpg" alt="First slide" />
+                            </div>
+                            <div className="carousel-item">
+                                <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/MONTGOMERY-BLACK-30X120.jpg" alt="Second slide" />
+                            </div>
+                            <div className="carousel-item">
+                                <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/30X120-LUXEMBURG-scaled.jpg" alt="Third slide" />
+                            </div>
+                        </div>
+                        <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span className="sr-only">Previous</span>
+                        </a>
+                        <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span className="sr-only">Next</span>
+                        </a>
                     </div>
                 </div>
+            </div>
         </>
     )
 }

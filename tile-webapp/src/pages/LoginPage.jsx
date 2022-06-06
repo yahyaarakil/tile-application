@@ -1,36 +1,54 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useRef} from 'react';
 import { Navigate } from "react-router-dom";
-const User = require("../db/models/user");
+import axios from 'axios';
+
+
 export const LoginPage = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState("");
-    
-    function getUser(email, password){
-        let user;
-        try {
-            user = await User.findByEmail(email);
-            console.log(user);
-        } catch (error) {
-            console.log("error happened");
-        }
 
-        if (user !== null) {
-            if(user.password === password){
-                setSuccess(true);
-            }
-        }else{
-            setErrMsg("Missing Username or Invalid Password!");
-        }
-    } 
+    const errRef = useRef();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(email, password);
-        getUser(email, password);
+
+        try {
+            axios.post("http://localhost:8080/login",
+                {
+                    email: email,
+                    password: password,
+                },
+                {
+                    headers: { "content-type": "application/json" }
+                }
+            )
+                .then(function (response) {
+                    console.log(response.data.token)
+                    if (response.status === 200) {
+                    
+                        sessionStorage.setItem('token',JSON.stringify(response.data.token));
+                        setSuccess(true);
+                    }
+                })
+
+        } catch (err) {
+            if (!err?.response) {
+                setErrMsg("No Server Response");
+            }
+            else if (err.response?.status === 400) {
+                setErrMsg("Missing Username or Invalid Password!");
+            }
+            else {
+                setErrMsg("Login Failed");
+            }
+            errRef.current.focus();
+        }
+
     }
 
     return (

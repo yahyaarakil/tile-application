@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { MainPage } from './MainPage';
 import { RecipePage } from './RecipePage';
+import { GlazeItem } from './GlazeItem';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/main" element={<MainPage />} />
-        <Route path="/recipes" element={<RecipePage />} />
+        <Route path="/createrecipe" element={<RecipePage />} />
+        <Route path="/test" element={<GlazeItem />} />
       </Routes>
     </Router>
   );

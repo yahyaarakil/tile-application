@@ -2,7 +2,7 @@ export const MainPage = () => {
 
     let logOutLink = "http://localhost:3000/login";
     let profileLink = "http://localhost:3000/profile";
-    let recipeLink = "http://localhost:3000/recipes";
+    let recipeLink = "http://localhost:3000/createrecipe";
 
     return (
         <>

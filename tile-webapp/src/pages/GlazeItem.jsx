@@ -1,29 +1,8 @@
-import { useState } from "react";
-
+import axios from "axios";
+import { useState, useEffect } from "react";
 var counter = 0;//this needs to be fixed, global var.
 
 export const GlazeItem = () => {
-
-    let dropdownItems = [
-        {
-            "name": "red",
-            "code": 1,
-            "company": "company a",
-            "price": 123
-        },
-        {
-            "name": "green",
-            "code": 2,
-            "company": "company a",
-            "price": 456
-        },
-        {
-            "name": "blue",
-            "code": 3,
-            "company": "company b",
-            "price": 789
-        }
-    ];
 
     let [applicaitonType, setAppType] = useState();
     let [waterContent, setWaterContent] = useState();
@@ -53,6 +32,21 @@ export const GlazeItem = () => {
         setPaint(e.target.value);
     };
 
+    const [materials, setMaterials] = useState([]);
+    
+    const getMaterials = async () => {
+        try {
+            const response = await axios.get('https://aeb157f3-dd85-42fc-9779-3a4328d5a230.mock.pstmn.io/materials');
+            setMaterials(response.data);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    useEffect(() => {
+        getMaterials();
+    }, []);
+
     
     const Input = () => {
 
@@ -61,7 +55,7 @@ export const GlazeItem = () => {
             <select onChange={handlePaintChange} className="btn">
 
                 {
-                    dropdownItems.map((item) =>
+                    materials.map((item) =>
                         <option value={item.code}>{item.name + "-" + item.company}</option>)
                 }
             </select>
@@ -89,8 +83,6 @@ export const GlazeItem = () => {
             setInputList(inputList.slice(<Input />,-1));
         }
     };
-
-    console.log(applicaitonType,waterContent,density,viscosity,paintId);
 
     return (
         <>

@@ -87,16 +87,16 @@ class UserItem extends React.Component {
                                     <p>Role</p>
                                     <form>
                                         <input type="radio" id="Manager" value={1} onChange={e => this.setRole(e)} />
-                                        <label  htmlFor="Manager">Manager</label><br />
+                                        <label htmlFor="Manager">Manager</label><br />
 
                                         <input type="radio" id="Admin" value={2} onChange={e => this.setRole(e)} />
-                                        <label  htmlFor="Admin">Admin</label><br />
+                                        <label htmlFor="Admin">Admin</label><br />
 
                                         <input type="radio" id="R&D" value={3} onChange={e => this.setRole(e)} />
-                                        <label  htmlFor="R&D">R&D</label><br />
+                                        <label htmlFor="R&D">R&D</label><br />
 
                                         <input type="radio" id="User" value={4} onChange={e => this.setRole(e)} />
-                                        <label  htmlFor="User">User</label>
+                                        <label htmlFor="User">User</label>
                                     </form>
                                     <button className="btn btn-secondary" onClick={this.handleSubmit}>Register User</button>
                                 </div>
@@ -136,11 +136,11 @@ class DeleteUser extends React.Component {
         let response = null;
         console.log(user);
         try {
-            response = await axios.post('https://aeb157f3-dd85-42fc-9779-3a4328d5a230.mock.pstmn.io/users?delete=%s',user.email);
+            response = await axios.post('https://aeb157f3-dd85-42fc-9779-3a4328d5a230.mock.pstmn.io/users?delete=' + user);
         } catch (err) {
             console.error(err);
         }
-        
+
     }
 
     handleUserChange = (e) => {
@@ -181,12 +181,12 @@ class DeleteUser extends React.Component {
 
 
 export const ManageUsers = () => {
-
-
     return (
         <>
-            <UserItem />
-            <DeleteUser />
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <UserItem />
+                <DeleteUser />
+            </div>
         </>
     );
 };

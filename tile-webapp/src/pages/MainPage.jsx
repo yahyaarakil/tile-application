@@ -1,25 +1,91 @@
 export const MainPage = () => {
 
+    const user={
+        "role":2
+    }
+
     let logOutLink = "http://localhost:3000/login";
     let profileLink = "http://localhost:3000/profile";
     let recipeLink = "http://localhost:3000/createrecipe";
+    let unapprovedLink = "http://localhost:3000/unapprovedrecipes";
+    let approvedLink = "http://localhost:3000/approvedrecipes";
+    let manageusers = "http://localhost:3000/manageusers";
+    let managematerials = "http://localhost:3000/managematerials";
+
+    const NavBar1 = () => {
+        return (
+            <div className="list-group list-group-flush">
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={unapprovedLink}>List Unapproved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
+            </div>
+        );
+    };
+
+    const NavBar2 = () => {
+        return (
+            <div className="list-group list-group-flush">
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={manageusers}>Add/Remove Users</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={managematerials}>Add/Remove/Update Material</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
+            </div>
+        );
+    };
+
+    const NavBar3 = () => {
+        return (
+            <div className="list-group list-group-flush">
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={recipeLink}>Create Recipe</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={unapprovedLink}>List Unapproved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
+            </div>
+        );
+    };
+
+    const NavBar4 = () => {
+        return (
+            <div className="list-group list-group-flush">
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
+            </div>
+        );
+    };
+
+    function NavBarItems(props) {
+        const option = props.option;
+        console.log(option)
+        if (option ===  1) {
+            return <NavBar1/>
+        }
+        if (option ===  2) {
+            return <NavBar2/>
+        }
+        if (option ===  3) {
+            return <NavBar3/>
+        }
+        if (option ===  4) {
+            return <NavBar4/>
+        }
+      }
 
     return (
         <>
             <div className="d-flex" id="wrapper">
                 <div className="border-end bg-white" id="sidebar-wrapper">
-                    <div className="list-group list-group-flush">
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3" href={recipeLink}>Create Recipe</a>
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
-                        <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
-                    </div>
+                    <NavBarItems option = {user.role}/>
                 </div>
                 <div id="page-content-wrapper">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-4" style={{
                                 "display": "flex",
-                                "justify-content": "center"
+                                "justifyContent": "center"
                             }}>
                                 <img src="https://www.termalseramik.com/wp-content/uploads/2022/01/logooo.png" alt="Termal Seramik Logo" />
                             </div>

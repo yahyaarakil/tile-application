@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import GlazeItem from "./GlazeItem";
 import axios from "axios";
 
 class FormItem extends React.Component {

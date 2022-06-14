@@ -7,6 +7,7 @@ import {
 import { MainPage } from './MainPage';
 import { RecipePage } from './RecipePage';
 import { ManageUsers } from './ManageUsers';
+import { ManageMaterials } from './ManageMaterials';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/main" element={<MainPage />} />
         <Route path="/createrecipe" element={<RecipePage />} />
         <Route path="/manageusers" element={<ManageUsers />} />
+        <Route path="/managematerials" element={<ManageMaterials />} />
       </Routes>
     </Router>
   );

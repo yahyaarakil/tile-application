@@ -140,7 +140,7 @@ function UnapprovedRecipes() {
                                         <label htmlFor="BakingTemp">Baking Temp:</label>
                                         <input id="BakingTemp" type="text" disabled={true} value={recipe.BakingTemp}></input>
                                         <label htmlFor="PreviousVersion">Previous Version:</label>
-                                        <input id="PreviousVersion" type="text" disabled={true} value={recipe.PreviousVersion}></input>
+                                        <input id="PreviousVersion" type="text" disabled={true} value={recipe.PreviousVersion?recipe.PreviousVersion:""}></input>
                                         <label htmlFor="Approved">Approved:</label>
                                         <input id="Approved" type="text" disabled={true} value={recipe.Approved}></input>
 

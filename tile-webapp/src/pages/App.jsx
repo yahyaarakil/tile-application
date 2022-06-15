@@ -8,8 +8,7 @@ import { MainPage } from './MainPage';
 import { RecipePage } from './RecipePage/RecipePage';
 import { ManageUsers } from './ManageUsers';
 import { ManageMaterials } from './ManageMaterials';
-import { ApprovedRecipes } from './ApprovedRecipes';
-
+import ApprovedRecipes from './ApprovedRecipes'
 function App() {
   return (
     <Router>

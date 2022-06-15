@@ -1,11 +1,12 @@
+const user={
+    "role":2
+}
+
 export const MainPage = () => {
 
-    const user={
-        "role":3
-    }
+    
 
     let logOutLink = "http://localhost:3000/login";
-    let profileLink = "http://localhost:3000/profile";
     let recipeLink = "http://localhost:3000/createrecipe";
     let unapprovedLink = "http://localhost:3000/unapprovedrecipes";
     let approvedLink = "http://localhost:3000/approvedrecipes";
@@ -17,7 +18,6 @@ export const MainPage = () => {
             <div className="list-group list-group-flush">
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={unapprovedLink}>List Unapproved Recipes</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
             </div>
         );
@@ -27,9 +27,8 @@ export const MainPage = () => {
         return (
             <div className="list-group list-group-flush">
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={manageusers}>Add/Remove Users</a>
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={managematerials}>Add/Remove/Update Material</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={managematerials}>Add/Remove Material</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
             </div>
         );
@@ -41,7 +40,6 @@ export const MainPage = () => {
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={recipeLink}>Create Recipe</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={unapprovedLink}>List Unapproved Recipes</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
             </div>
         );
@@ -51,7 +49,6 @@ export const MainPage = () => {
         return (
             <div className="list-group list-group-flush">
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={profileLink}>Profile</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
             </div>
         );

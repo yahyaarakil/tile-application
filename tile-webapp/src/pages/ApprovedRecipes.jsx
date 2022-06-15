@@ -1,120 +1,177 @@
-import React from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 
-class UserItem extends React.Component {
+const RECIPES = [
+    {
+        "ID": 1,
+        "Name": "recipe",
+        "Size": "3x3",
+        "CreationDate": "2022-06-03T18",
+        "CreateAdBy": "oguzkaganaltas@gmail.com",
+        "MoldShape": "moldshape1",
+        "BakerName": "baker1",
+        "InitTemp": 25.5,
+        "Humidity": 20,
+        "DryingDuration": "00:00:50",
+        "DryingTemp": 90,
+        "BakingDuration": "00:01:20",
+        "BakingTemp": 50,
+        "PreviousVersion": null,
+        "Approved": 0,
+        "Comment": "very good"
+    },
+    {
+        "ID": 4,
+        "Name": "recipe",
+        "Size": "3x3",
+        "CreationDate": "2022-06-04T13",
+        "CreatedBy": "oguzkaganaltas@gmail.com",
+        "MoldShape": "moldshape1",
+        "BakerName": "baker1",
+        "InitTemp": 25.5,
+        "Humidity": 20,
+        "DryingDuration": "00:00:50",
+        "DryingTemp": 90,
+        "BakingDuration": "00:01:20",
+        "BakingTemp": 50,
+        "PreviousVersion": null,
+        "Approved": 0,
+        "Comment": "very good"
+    },
+    {
+        "ID": 7,
+        "Name": "recipe",
+        "Size": "3x3",
+        "CreationDate": "2022-06-04T13",
+        "CreatedBy": "oguzkaganaltas@gmail.com",
+        "MoldShape": "moldshape1",
+        "BakerName": "baker1",
+        "InitTemp": 25.5,
+        "Humidity": 20,
+        "DryingDuration": "00:00:50",
+        "DryingTemp": 90,
+        "BakingDuration": "00:01:20",
+        "BakingTemp": 50,
+        "PreviousVersion": null,
+        "Approved": 0,
+        "Comment": "very good"
+    },
+    {
+        "ID": 10,
+        "Name": "recipe",
+        "Size": "3x3",
+        "CreationDate": "2022-06-14T20",
+        "CreatedBy": "oguzkaganaltas@gmail.com",
+        "MoldShape": "moldshape1",
+        "BakerName": "baker1",
+        "InitTemp": 25.5,
+        "Humidity": 20,
+        "DryingDuration": "00:00:50",
+        "DryingTemp": 90,
+        "BakingDuration": "00:01:20",
+        "BakingTemp": 50,
+        "PreviousVersion": null,
+        "Approved": 0,
+        "Comment": "very good"
+    }
+]
 
-    constructor() {
-        super();
-        this.state = {
-            recipes: [],
-            selectedRecipe: null,
-            selectedRecipeObject: null,
-            visible:false
+
+function ApprovedRecipes() {
+    const [option, setOption] = useState("");
+    const [visible = false, setVisible] = useState("");
+
+    function handleButton() {
+        setVisible(true)
+    }
+
+    function search(key){
+        for (let i=0; i < RECIPES.length; i++) {
+            if (RECIPES[i].ID.toString() === key) {
+                return RECIPES[i];
+            }
         }
-        this.getRecipes();
+      }
 
-    }
+    function ShowRecipe(props) {
+        if (props.visible) {
 
-    setName = (e) => {
-        this.setState({ name: e.target.value })
-    }
+            console.log(props.recipe.toString().split("-")[0])
+            let recipe = search(props.recipe.toString().split("-")[0]);
 
-    getRecipes = async () => {
-        let response = null;
-        try {
-            response = await axios.get('https://aeb157f3-dd85-42fc-9779-3a4328d5a230.mock.pstmn.io/recipes2');
-        } catch (err) {
-            console.error(err);
-        }
-        this.setState({ recipes: response.data });
-    }
-
-    handleRecipeChange = (e) => {
-        this.setState({ selectedRecipe: e.target.value });
-        console.log(e.target.value)
-    };
-
-    handleSubmit = () => {
-        var item = this.state.recipes.find(item => item.ID.toString() === this.state.selectedRecipe);
-        this.setState({ selectedRecipeObject: item });
-        this.setState({ visible: true });
-    };
-
-    showRecipe = (args)  =>{
-        if(args.visible){
+            console.log(recipe)
             return (
-                <>
-                    <div className="row">
-                        <div className="col-6">
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                            <p>{args.object.ID}</p>
-                        </div>
-                        <div className="col-6">
-                            <p>asdasdasd</p>
-                        </div>
-                    </div>
-                </>
-            );
-        }
-        return<></>;
-        
-    }
-
-    render() {
-        return (
-            <>
-                <div className="card" style={{ width: "28rem" }}>
-                    <div className="card-body">
-                        <h4 className="card-title">Approved Recipes</h4>
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-6">
-                                    <div className="dropdown">
-                                        <select onChange={this.handleRecipeChange} className="btn">
-                                            {this.state.recipes.map((item) => <option value={item.ID}>{item.Name + "-" + item.ID}</option>)}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="col-6">
-                                    <p>Operations</p>
-                                    <button className="btn btn-secondary btn-block" onClick={this.handleSubmit}>Show</button><br />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="card" style={{ width: "28rem" }}>
+                <div className="newItem">
+                    <div className="card">
                         <div className="card-body">
                             <h4 className="card-title">Selected Recipe</h4>
                             <div className="container">
-                                <this.showRecipe visible={this.state.visible} object = {this.state.selectedRecipeObject}/>
+                                <div className="row">
+                                    <div className="col-4 d-flex flex-column">
+                                        <label for="ID">ID:</label>
+                                        <input id="ID" type="text" disabled={true} value={recipe.ID}></input>  
+                                        <label for="Name">Name:</label>
+                                        <input id="Name" type="text" disabled={true} value={recipe.Name}></input>  
+                                        <label for="Size">Size:</label>
+                                        <input id="Size" type="text" disabled={true} value={recipe.Size}></input>  
+                                        <label for="CreationDate">CreationDate:</label>
+                                        <input id="CreationDate" type="text" disabled={true} value={recipe.CreationDate}></input>  
+                                        <label for="MoldShape">Mold Shape:</label>
+                                        <input id="MoldShape" type="text" disabled={true} value={recipe.MoldShape}></input>  
+                                        <label for="BakerName">Baker Name:</label>
+                                        <input id="BakerName" type="text" disabled={true} value={recipe.BakerName}></input>  
+                                        <label for="InitTemp">Init Temp:</label>
+                                        <input id="InitTemp" type="text" disabled={true} value={recipe.InitTemp}></input>  
+                                        <label for="Humidity">Humidity:</label>
+                                        <input id="Humidity" type="text" disabled={true} value={recipe.Humidity}></input>  
+                                        <label for="DryingDuration">Drying Duration:</label>
+                                        <input id="DryingDuration" type="text" disabled={true} value={recipe.DryingDuration}></input>  
+                                        <label for="DryingTemp">Drying Temp:</label>
+                                        <input id="DryingTemp" type="text" disabled={true} value={recipe.DryingTemp}></input>  
+                                        <label for="BakingDuration">Baking Duration:</label>
+                                        <input id="BakingDuration" type="text" disabled={true} value={recipe.BakingDuration}></input>  
+                                        <label for="BakingTemp">Baking Temp:</label>
+                                        <input id="BakingTemp" type="text" disabled={true} value={recipe.BakingTemp}></input>  
+                                        <label for="PreviousVersion">Previous Version:</label>
+                                        <input id="PreviousVersion" type="text" disabled={true} value={recipe.PreviousVersion}></input>  
+                                        <label for="Approved">Approved:</label>
+                                        <input id="Approved" type="text" disabled={true} value={recipe.Approved}></input>  
+                                        <label for="Comment">Comment:</label>
+                                        <input id="Comment" type="text" disabled={true} value={recipe.Comment}></input>  
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </>
-        );
+            )
+        }
+
     }
+
+    return (
+        <div className="card">
+            <div className="card-body">
+                <h4 className="card-title">Approved Recipes</h4>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-6">
+                            <select className="form-select" onClick={e => setVisible(false)} onChange={e => setOption(e.target.value)}>
+                                {RECIPES.map((recipes) => <option>{recipes.ID + "-" + recipes.Name + " " + recipes.Size}</option>)}
+                            </select>
+                        </div>
+                        <div className="col-6">
+                            <p>Operations</p>
+                            <button className="btn btn-secondary btn-block" onClick={handleButton}>Show</button><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ShowRecipe visible={visible} recipe={option} />
+
+        </div>
+    );
 }
 
-export const ApprovedRecipes = () => {
-    return (
-        <>
-            <div className="d-flex flex-column align-items-center justify-content-center">
-                <UserItem />
-            </div>
-        </>
-    );
-};
+export default ApprovedRecipes;

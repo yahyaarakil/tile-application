@@ -1,3 +1,8 @@
+
+import img1 from '../images/20X90-RIOWOOD-BROWN.jpg';
+import img2 from '../images/30X120-LUXEMBURG-scaled.jpg';
+import img3 from '../images/PEGA-WOOD-MIX-30x120-091221-scaled.jpg';
+
 const user = {
     "role": 4
 }
@@ -101,6 +106,33 @@ export const MainPage = () => {
                             }}>
                                 <img src="https://www.termalseramik.com/wp-content/uploads/2022/01/logooo.png" alt="Termal Seramik Logo" />
                             </div>
+                        </div>
+                        <div id="items" className="carousel slide" data-bs-ride="true">
+                            <div className="carousel-indicators">
+                                <button type="button" data-bs-target="#items" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#items" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#items" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                            <div className="carousel-inner">
+                                <div className="carousel-item active">
+                                    <img className="d-block w-100" src={img1} alt="First slide" />
+                                </div>
+                                <div className="carousel-item">
+                                    <img className="d-block w-100" src={img2} alt="Second slide" />
+                                </div>
+                                <div className="carousel-item">
+                                    <img className="d-block w-100" src={img3} alt="Third slide" />
+                                </div>
+                            </div>
+                            <button className="carousel-control-prev" type="button" data-bs-target="#items" data-bs-slide="prev">
+                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span>Previous</span>
+                            </button>
+                            <button className="carousel-control-next" type="button" data-bs-target="#items" data-bs-slide="next">
+                                <span>Next</span>
+                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+
+                            </button>
 
                         </div>
 
@@ -117,32 +149,9 @@ export const MainPage = () => {
                     </div>
 
 
-                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                        </div>
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/PEGA-WOOD-MIX-30x120-091221-scaled.jpg" alt="First slide" />
-                            </div>
-                            <div className="carousel-item">
-                                <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/MONTGOMERY-BLACK-30X120.jpg" alt="Second slide" />
-                            </div>
-                            <div className="carousel-item">
-                                <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/30X120-LUXEMBURG-scaled.jpg" alt="Third slide" />
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
+
+
+
                 </div>
             </div>
         </>

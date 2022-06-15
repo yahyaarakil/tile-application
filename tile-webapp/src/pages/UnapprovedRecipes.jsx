@@ -92,17 +92,15 @@ function UnapprovedRecipes() {
         }
     }
 
-    
-
-    function handleApproveButton(){
+    function handleApproveButton() {
         console.log("approved")
     }
 
 
     function ShowRecipe(props) {
         const [comment, setComment] = useState("");
-        
-        function handleCommentButton(){
+
+        function handleCommentButton() {
             console.log(comment)
         }
 
@@ -147,11 +145,11 @@ function UnapprovedRecipes() {
                                         <input id="Approved" type="text" disabled={true} value={recipe.Approved}></input>
 
                                     </div>
-                                    
+
                                     <div className="col-6 d-flex flex-column">
                                         <label htmlFor="Comment">Comment:</label>
-                                        <input id="Comment" type="text" value={comment} className="form-control" aria-describedby="basic-addon1" onChange={e => setComment(e.target.value)} /><br/>
-                                        <button className="btn btn-primary" onClick={handleCommentButton}>Add Comment</button><br/>
+                                        <input id="Comment" type="text" value={comment} className="form-control" aria-describedby="basic-addon1" onChange={e => setComment(e.target.value)} /><br />
+                                        <button className="btn btn-primary" onClick={handleCommentButton}>Add Comment</button><br />
                                         <button className="btn btn-success" onClick={handleApproveButton}>Approve</button>
                                     </div>
                                 </div>

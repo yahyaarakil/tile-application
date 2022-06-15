@@ -1,7 +1,7 @@
 export const MainPage = () => {
 
     const user={
-        "role":2
+        "role":3
     }
 
     let logOutLink = "http://localhost:3000/login";

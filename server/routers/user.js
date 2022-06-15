@@ -6,7 +6,8 @@ let router = express.Router();
 router.get('/users', async (req, res) => {
     try {
         res.status(200).json(await userController.fetchAllUsers());
-    } catch {
+    } catch (error) {
+        console.log(error);
         res.status(500).send("ERROR");
     }
 });

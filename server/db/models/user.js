@@ -53,10 +53,11 @@ class User {
     }
 
     static async getAll() {
-        emails = await dbConnection.makeQuery('SELECT Email FROM User');
-        users = [];
+        let [emails] = await dbConnection.makeQuery('SELECT Email FROM TileUsers');
+        let users = [];
+        console.log(emails[0])
         for (var i = 0; i < emails.length; i++) {
-            users.push(await this.findByEmail(emails[i]));
+            users.push(await this.findByEmail(emails[i].Email));
         }
         return users;
     }

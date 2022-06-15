@@ -62,7 +62,9 @@ export const RecipePage = () => {
         <GlazeItem key={index} onChange={setFormState} />
     );
 
-    const allPaints = formState.paints.map((material, index) => (<PaintItem key={index} />))
+    const allPaints = formState.paints.map((material, index) => 
+    <PaintItem onChange={setFormState} key={index} />
+    );
 
     return (
 

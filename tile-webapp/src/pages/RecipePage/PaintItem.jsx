@@ -46,13 +46,15 @@ const MATERIAL_OPTIONS = [
 function PaintItem({ onChange }) {
 
     const [grammage, setGrammage] = useState("");
+    const [material, setMaterial] = useState("");
 
     useEffect(() => {
         onChange(form => ({
             ...form,
-            grammage
+            grammage,
+            material
         }));
-    }, [grammage])
+    }, [grammage, material])
 
 
     return (
@@ -67,14 +69,12 @@ function PaintItem({ onChange }) {
                         <div className="row">
                             <div className="col-6">
                                 <input onChange={e => setGrammage(e.target.value)}
-                                    type="text" step="0.01" className="form-control" aria-describedby="basic-addon1" />
+                                    type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" />
                             </div>
                             <div className="col-6">
-                                <div className="dropdown">
-                                    {<select className="form-select" onChange={null}>
-                                        {MATERIAL_OPTIONS.map((materialOptions) => <option>{materialOptions.name}</option>)}
-                                    </select>}
-                                </div>
+                                <select className="form-select" onChange={e=>setMaterial(e.target.value)}>
+                                    {MATERIAL_OPTIONS.map((materialOptions) => <option key={materialOptions.code} value={materialOptions.code}>{materialOptions.name}</option>)}
+                                </select>
                             </div>
                         </div>
                     </div>

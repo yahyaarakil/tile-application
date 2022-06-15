@@ -80,7 +80,7 @@ function GlazeItem({ onChange }) {
         {options.map((option, index) => (
             <div key={index}>
                 <select className="form-select" onChange={null}>
-                    {MATERIAL_OPTIONS.map((materialOptions) => <option>{materialOptions.name}</option>)}
+                    {MATERIAL_OPTIONS.map((materialOptions) => <option key={materialOptions.code} value={materialOptions.code}>{materialOptions.name}</option>)}
                 </select>
             </div>
 

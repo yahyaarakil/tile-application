@@ -95,10 +95,8 @@ function ApprovedRecipes() {
     function ShowRecipe(props) {
         if (props.visible) {
 
-            console.log(props.recipe.toString().split("-")[0])
             let recipe = search(props.recipe.toString().split("-")[0]);
 
-            console.log(recipe)
             return (
                 <div className="newItem">
                     <div className="card">
@@ -107,35 +105,35 @@ function ApprovedRecipes() {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-4 d-flex flex-column">
-                                        <label for="ID">ID:</label>
+                                        <label htmlFor="ID">ID:</label>
                                         <input id="ID" type="text" disabled={true} value={recipe.ID}></input>  
-                                        <label for="Name">Name:</label>
+                                        <label htmlFor="Name">Name:</label>
                                         <input id="Name" type="text" disabled={true} value={recipe.Name}></input>  
-                                        <label for="Size">Size:</label>
+                                        <label htmlFor="Size">Size:</label>
                                         <input id="Size" type="text" disabled={true} value={recipe.Size}></input>  
-                                        <label for="CreationDate">CreationDate:</label>
+                                        <label htmlFor="CreationDate">CreationDate:</label>
                                         <input id="CreationDate" type="text" disabled={true} value={recipe.CreationDate}></input>  
-                                        <label for="MoldShape">Mold Shape:</label>
+                                        <label htmlFor="MoldShape">Mold Shape:</label>
                                         <input id="MoldShape" type="text" disabled={true} value={recipe.MoldShape}></input>  
-                                        <label for="BakerName">Baker Name:</label>
+                                        <label htmlFor="BakerName">Baker Name:</label>
                                         <input id="BakerName" type="text" disabled={true} value={recipe.BakerName}></input>  
-                                        <label for="InitTemp">Init Temp:</label>
+                                        <label htmlFor="InitTemp">Init Temp:</label>
                                         <input id="InitTemp" type="text" disabled={true} value={recipe.InitTemp}></input>  
-                                        <label for="Humidity">Humidity:</label>
+                                        <label htmlFor="Humidity">Humidity:</label>
                                         <input id="Humidity" type="text" disabled={true} value={recipe.Humidity}></input>  
-                                        <label for="DryingDuration">Drying Duration:</label>
+                                        <label htmlFor="DryingDuration">Drying Duration:</label>
                                         <input id="DryingDuration" type="text" disabled={true} value={recipe.DryingDuration}></input>  
-                                        <label for="DryingTemp">Drying Temp:</label>
+                                        <label htmlFor="DryingTemp">Drying Temp:</label>
                                         <input id="DryingTemp" type="text" disabled={true} value={recipe.DryingTemp}></input>  
-                                        <label for="BakingDuration">Baking Duration:</label>
+                                        <label htmlFor="BakingDuration">Baking Duration:</label>
                                         <input id="BakingDuration" type="text" disabled={true} value={recipe.BakingDuration}></input>  
-                                        <label for="BakingTemp">Baking Temp:</label>
+                                        <label htmlFor="BakingTemp">Baking Temp:</label>
                                         <input id="BakingTemp" type="text" disabled={true} value={recipe.BakingTemp}></input>  
-                                        <label for="PreviousVersion">Previous Version:</label>
-                                        <input id="PreviousVersion" type="text" disabled={true} value={recipe.PreviousVersion}></input>  
-                                        <label for="Approved">Approved:</label>
+                                        <label htmlFor="PreviousVersion">Previous Version:</label>
+                                        <input id="PreviousVersion" type="text" disabled={true} value={recipe.PreviousVersion?recipe.PreviousVersion:""}></input>  
+                                        <label htmlFor="Approved">Approved:</label>
                                         <input id="Approved" type="text" disabled={true} value={recipe.Approved}></input>  
-                                        <label for="Comment">Comment:</label>
+                                        <label htmlFor="Comment">Comment:</label>
                                         <input id="Comment" type="text" disabled={true} value={recipe.Comment}></input>  
 
                                     </div>
@@ -157,7 +155,7 @@ function ApprovedRecipes() {
                     <div className="row">
                         <div className="col-6">
                             <select className="form-select" onClick={e => setVisible(false)} onChange={e => setOption(e.target.value)}>
-                                {RECIPES.map((recipes) => <option>{recipes.ID + "-" + recipes.Name + " " + recipes.Size}</option>)}
+                                {RECIPES.map((recipes) => <option key={recipes.ID}>{recipes.ID + "-" + recipes.Name + " " + recipes.Size}</option>)}
                             </select>
                         </div>
                         <div className="col-6">

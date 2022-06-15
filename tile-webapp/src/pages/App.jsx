@@ -8,7 +8,8 @@ import { MainPage } from './MainPage';
 import { RecipePage } from './RecipePage/RecipePage';
 import { ManageUsers } from './ManageUsers';
 import { ManageMaterials } from './ManageMaterials';
-import ApprovedRecipes from './ApprovedRecipes'
+import ApprovedRecipes from './ApprovedRecipes';
+import UnapprovedRecipes from './UnapprovedRecipes';
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
         <Route path="/manageusers" element={<ManageUsers />} />
         <Route path="/managematerials" element={<ManageMaterials />} />
         <Route path="/approvedrecipes" element={<ApprovedRecipes />} />
+        <Route path="/unapprovedrecipes" element={<UnapprovedRecipes />} />
       </Routes>
     </Router>
   );

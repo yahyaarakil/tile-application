@@ -161,8 +161,7 @@ function ApprovedRecipes() {
                             </select>
                         </div>
                         <div className="col-6">
-                            <p>Operations</p>
-                            <button className="btn btn-secondary btn-block" onClick={handleButton}>Show</button><br />
+                            <button className="btn btn-primary btn-block" onClick={handleButton}>Show</button><br />
                         </div>
                     </div>
                 </div>

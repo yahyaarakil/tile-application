@@ -34,7 +34,7 @@ class ContainsMaterial {
         try {
             if (this.inDB) {
                 await dbConnection.makeQuery(
-                    'UPDATE ContainsMaterials SET Amount=?, ApplicationType=?, WaterContent=?, Density=?, Viscosity=?, WHERE RecipeID=? AND MaterialCode=?;',
+                    'UPDATE ContainsMaterials SET Amount=?, ApplicationType=?, WaterContent=?, Density=?, Viscosity=? WHERE RecipeID=? AND MaterialCode=?;',
                     [this.amount, this.applicationType, this.waterContent, this.density, this.viscosity,this.recipeId,this.materialCode]
                 );
             } else {

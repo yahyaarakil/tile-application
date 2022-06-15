@@ -29,7 +29,15 @@ const addRecipe = async (recipe, user) => {
     return await newRecipe.save();
 }
 
+const approveRecipe = async (id) => {
+    let recipe = await Recipe.findByID(id);
+    recipe.approved = true;
+
+    return await recipe.save();
+}
+
 module.exports = {
     fetchAllRecipes: fetchAllRecipes,
-    addRecipe, addRecipe
+    addRecipe, addRecipe,
+    approveRecipe: approveRecipe
 }

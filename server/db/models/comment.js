@@ -18,7 +18,7 @@ class Comment {
                 for (let index = 0; index < results.length; index++) {
                     const comment = results[index];
                     let manager = await User.findByEmail(comment.ByManager);
-                    comments.push(new Comment({ manager: manager, recipe: recipe, comment: comment.Comment, date: comment.Date, inDB: true}));
+                    comments.push(new Comment({ Manager: manager, Recipe: recipe, Comment: comment.Comment, Date: comment.Date, inDB: true}));
                 }
                 return comments;
             } else {

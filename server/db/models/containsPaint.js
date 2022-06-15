@@ -31,7 +31,7 @@ class ContainsPaint {
         try {
             if (this.inDB) {
                 await dbConnection.makeQuery(
-                    'UPDATE ContainsPaints SET RecipeID=?, MaterialCode=?, Grammage=?, WHERE RecipeID=? AND MaterialCode=?;',
+                    'UPDATE ContainsPaints SET RecipeID=?, MaterialCode=?, Grammage=? WHERE RecipeID=? AND MaterialCode=?;',
                     [this.recipeId, this.materialCode, this.grammage, this.recipeId, this.materialCode]
                 );
             } else {

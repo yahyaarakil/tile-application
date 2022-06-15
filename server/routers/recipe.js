@@ -22,4 +22,13 @@ router.post('/addrecipe', auth, async (req, res) => {
     }
 });
 
+router.post('/approverecipe', auth, async (req, res) => {
+    try {
+        res.status(200).json(await recipeController.approveRecipe(req.body.id));
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("ERROR");
+    }
+});
+
 module.exports = router;

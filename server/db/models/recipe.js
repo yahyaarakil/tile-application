@@ -56,8 +56,6 @@ class Recipe {
         recipe.Paints = await ContainsPaint.findMaterialsByRecipeID(recipe.ID);
         recipe.Materials = await ContainsMaterial.findMaterialsByRecipeID(recipe.ID);
         let newRecipe = new Recipe(recipe);
-        console.log(newRecipe);
-        console.log(recipe.materials);
         return newRecipe;
     }
 

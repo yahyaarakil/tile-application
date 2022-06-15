@@ -1,10 +1,10 @@
-const user={
-    "role":4
+const user = {
+    "role": 4
 }
 
 export const MainPage = () => {
 
-    
+
 
     let logOutLink = "http://localhost:3000/login";
     let recipeLink = "http://localhost:3000/createrecipe";
@@ -69,28 +69,28 @@ export const MainPage = () => {
 
     function NavBarItems(props) {
         const option = props.option;
-        if (option ===  0) {
-            return <NavBar0/>
+        if (option === 0) {
+            return <NavBar0 />
         }
-        if (option ===  1) {
-            return <NavBar1/>
+        if (option === 1) {
+            return <NavBar1 />
         }
-        if (option ===  2) {
-            return <NavBar2/>
+        if (option === 2) {
+            return <NavBar2 />
         }
-        if (option ===  3) {
-            return <NavBar3/>
+        if (option === 3) {
+            return <NavBar3 />
         }
-        if (option ===  4) {
-            return <TestBar/>
+        if (option === 4) {
+            return <TestBar />
         }
-      }
+    }
 
     return (
         <>
             <div className="d-flex" id="wrapper">
                 <div className="border-end bg-white" id="sidebar-wrapper">
-                    <NavBarItems option = {user.role}/>
+                    <NavBarItems option={user.role} />
                 </div>
                 <div id="page-content-wrapper">
                     <div className="container-fluid">
@@ -101,7 +101,7 @@ export const MainPage = () => {
                             }}>
                                 <img src="https://www.termalseramik.com/wp-content/uploads/2022/01/logooo.png" alt="Termal Seramik Logo" />
                             </div>
-                            
+
                         </div>
 
                         <p align="justify">Create your tile with given items and the program will handle the rest.</p>
@@ -115,12 +115,14 @@ export const MainPage = () => {
                         <p align="justify">The products produced in Termal Seramik, which currently produces with approximately 1,300 people and has both national and international certifications, go through detailed production and control stages in accordance with the Total Quality Management.</p>
 
                     </div>
-                    <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel" >
-                        <ol className="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>
+
+
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
                         <div className="carousel-inner">
                             <div className="carousel-item active">
                                 <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/PEGA-WOOD-MIX-30x120-091221-scaled.jpg" alt="First slide" />
@@ -132,14 +134,14 @@ export const MainPage = () => {
                                 <img className="d-block w-100" src="https://www.termalseramik.com/wp-content/uploads/2022/01/30X120-LUXEMBURG-scaled.jpg" alt="Third slide" />
                             </div>
                         </div>
-                        <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="sr-only">Previous</span>
-                        </a>
-                        <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="sr-only">Next</span>
-                        </a>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
                 </div>
             </div>

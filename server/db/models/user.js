@@ -12,6 +12,9 @@ class User {
     }
 
     static async findBy(key, value) {
+        if (!value && value !== false) {
+            return null;
+        }
         try {
             let [results] = await dbConnection.makeQuery(`SELECT * FROM TileUsers WHERE ${key}=?;`, [ value ]);
             if (results.length > 0) {

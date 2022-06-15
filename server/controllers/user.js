@@ -20,9 +20,9 @@ const registerUser = async (user) => {
 }
 
 const loginUser = async (user) => {
-    newUser = await User.findByEmail(user.email);
+    newUser = await User.findByEmail(user.Email);
     if (newUser) {
-        if (newUser.password === user.password) {
+        if (newUser.Password === user.password) {
             // newUser.sessionID
             return newUser;
         }

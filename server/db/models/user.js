@@ -49,6 +49,15 @@ class User {
         }
     }
 
+    static async getAll() {
+        emails = await dbConnection.makeQuery('SELECT Email FROM User');
+        users = [];
+        for (var i = 0; i < emails.length; i++) {
+            users.push(await this.findByEmail(emails[i]));
+        }
+        return users;
+    }
+
     async save() {
         try {
             if (this.inDB) {

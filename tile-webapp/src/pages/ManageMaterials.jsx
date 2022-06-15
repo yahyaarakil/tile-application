@@ -64,35 +64,6 @@ class UserItem extends React.Component {
 
     }
 
-    handleDelete = async (e) => {
-        e.preventDefault();
-        try {
-            console.log(this.state)
-            axios.delete("https://aeb157f3-dd85-42fc-9779-3a4328d5a230.mock.pstmn.io/deletematerial",
-                this.state,
-                {
-                    headers: { "content-type": "application/json" }
-                }
-            )
-                .then(function (response) {
-                    if (response.status === 200) {
-
-                        sessionStorage.setItem('token', JSON.stringify(response.data.token));
-                        console.log("registered the material");
-                    }
-                })
-
-        } catch (err) {
-            if (!err?.response) {
-                console.log("No Server Response");
-            }
-            else {
-                console.log("Login Failed");
-            }
-        }
-
-    }
-
     handleUpdate = async (e) => {
         e.preventDefault();
         try {
@@ -145,7 +116,6 @@ class UserItem extends React.Component {
                                 <div className="col-6">
                                     <p>Operations</p>
                                     <button className="btn btn-secondary btn-block" onClick={this.handleSubmit}>Add</button><br/>
-                                    <button className="btn btn-secondary btn-block" onClick={this.handleDelete}>Delete</button><br/>
                                     <button className="btn btn-secondary btn-block" onClick={this.handleUpdate}>Update </button><br/>
                                 </div>
                             </div>

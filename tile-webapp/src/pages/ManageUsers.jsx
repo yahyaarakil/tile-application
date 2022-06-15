@@ -183,9 +183,8 @@ class DeleteUser extends React.Component {
 export const ManageUsers = () => {
     return (
         <>
-            <div class="d-flex flex-column align-items-center justify-content-center">
+            <div className="d-flex flex-column align-items-center justify-content-center">
                 <UserItem />
-                <DeleteUser />
             </div>
         </>
     );

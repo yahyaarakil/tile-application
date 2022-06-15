@@ -17,11 +17,11 @@ export const RecipePage = () => {
         formNo: "",
         bakerName: "",
         bakingDuration: "",
-        bakingTemperature: "",
-        dryingTemperature: "",
+        bakingTemp: "",
+        dryingTemp: "",
         dryingDuration: "",
         humidity: "",
-        initialTemperature: "",
+        initialTemp: "",
         glazes: [],
         paints: []
     });

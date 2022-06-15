@@ -1,5 +1,5 @@
 const user={
-    "role":2
+    "role":0
 }
 
 export const MainPage = () => {
@@ -23,18 +23,18 @@ export const MainPage = () => {
         );
     };
 
-    const NavBar2 = () => {
+    const NavBar0 = () => {
         return (
             <div className="list-group list-group-flush">
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={manageusers}>Add/Remove Users</a>
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={managematerials}>Add/Remove Material</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={manageusers}>Add/Update Users</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={managematerials}>Add/Update Material</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
             </div>
         );
     };
 
-    const NavBar3 = () => {
+    const NavBar2 = () => {
         return (
             <div className="list-group list-group-flush">
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={recipeLink}>Create Recipe</a>
@@ -45,7 +45,7 @@ export const MainPage = () => {
         );
     };
 
-    const NavBar4 = () => {
+    const NavBar3 = () => {
         return (
             <div className="list-group list-group-flush">
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
@@ -56,7 +56,9 @@ export const MainPage = () => {
 
     function NavBarItems(props) {
         const option = props.option;
-        console.log(option)
+        if (option ===  0) {
+            return <NavBar0/>
+        }
         if (option ===  1) {
             return <NavBar1/>
         }
@@ -65,9 +67,6 @@ export const MainPage = () => {
         }
         if (option ===  3) {
             return <NavBar3/>
-        }
-        if (option ===  4) {
-            return <NavBar4/>
         }
       }
 
@@ -80,15 +79,13 @@ export const MainPage = () => {
                 <div id="page-content-wrapper">
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-4" style={{
+                            <div className="col-12" style={{
                                 "display": "flex",
                                 "justifyContent": "center"
                             }}>
                                 <img src="https://www.termalseramik.com/wp-content/uploads/2022/01/logooo.png" alt="Termal Seramik Logo" />
                             </div>
-                            <div className="col-4">
-                                <h1 className="mt-4">Ceramic Tile Generator</h1>
-                            </div>
+                            
                         </div>
 
                         <p align="justify">Create your tile with given items and the program will handle the rest.</p>

@@ -2,20 +2,20 @@ import React, { useState, useEffect } from "react";
 
 function DryingItem({onChange}) {
 
-    const [dryingTemperature, setDryingTemp] = useState();
+    const [dryingTemp, setDryingTemp] = useState();
     const [dryingDuration, setDryingDuration] = useState();
     const [humidity, setHumidity] = useState();
-    const [initialTemperature, setInitialTemp] = useState();
+    const [initialTemp, setInitialTemp] = useState();
 
     useEffect(() => {
         onChange(prevValue => ({
             ...prevValue,
-            dryingTemperature,
+            dryingTemp,
             dryingDuration,
             humidity,
-            initialTemperature,
+            initialTemp,
         }));
-    }, [dryingTemperature, dryingDuration, humidity, initialTemperature]);
+    }, [dryingTemp, dryingDuration, humidity, initialTemp]);
 
     return (
         <div className="card" >
@@ -25,15 +25,15 @@ function DryingItem({onChange}) {
                     <div className="row">
                         <div className="col-6">
                             <p>Drying Temp</p>
-                            <input type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" onChange={e => setDryingTemp(e)} />
+                            <input type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" onChange={e => setDryingTemp(e.target.value)} />
                             <p>Drying Duraton</p>
-                            <input type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" onChange={e => setDryingDuration(e)} />
+                            <input type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" onChange={e => setDryingDuration(e.target.value)} />
                         </div>
                         <div className="col-6">
                             <p>Humidity</p>
-                            <input type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" onChange={e => setHumidity(e)} />
+                            <input type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" onChange={e => setHumidity(e.target.value)} />
                             <p>Initial Temperature</p>
-                            <input type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" onChange={e => setInitialTemp(e)} />
+                            <input type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" onChange={e => setInitialTemp(e.target.value)} />
                         </div>
                     </div>
                 </div>

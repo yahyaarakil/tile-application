@@ -1,5 +1,5 @@
 const user={
-    "role":2
+    "role":4
 }
 
 export const MainPage = () => {
@@ -54,6 +54,19 @@ export const MainPage = () => {
         );
     };
 
+    const TestBar = () => {
+        return (
+            <div className="list-group list-group-flush">
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={manageusers}>Add/Update Users</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={managematerials}>Add/Update Material</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={recipeLink}>Create Recipe</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={unapprovedLink}>List Unapproved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
+            </div>
+        );
+    };
+
     function NavBarItems(props) {
         const option = props.option;
         if (option ===  0) {
@@ -67,6 +80,9 @@ export const MainPage = () => {
         }
         if (option ===  3) {
             return <NavBar3/>
+        }
+        if (option ===  4) {
+            return <TestBar/>
         }
       }
 

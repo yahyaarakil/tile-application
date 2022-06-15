@@ -62,29 +62,37 @@ export const RecipePage = () => {
         <GlazeItem key={index} onChange={setFormState} />
     );
 
-    const allPaints = formState.paints.map((material, index) => 
-    <PaintItem onChange={setFormState} key={index} />
+    const allPaints = formState.paints.map((material, index) =>
+        <PaintItem onChange={setFormState} key={index} />
     );
 
     return (
-
-        <div className="row">
-            <button className="btn btn-secondary" onClick={addGlaze}>Add Glaze</button>
-            <button className="btn btn-secondary" onClick={addPaint}>Add Paint</button>
-            <button className="btn btn-secondary" onClick={submit}>Save Recipe</button>
-            <div className="col-4">
-
-                <div>
-                    <FormItem onChange={setFormState} />
-                    <BakerItem onChange={setFormState} />
-                    <DryingItem onChange={setFormState} />
+        <div className="newItem">
+            <div className="row">
+                <div className="col-4">
+                    <button className="btn btn-primary w-100" onClick={submit}>Save Recipe</button>
+                </div>
+                <div className="col-4">
+                    <button className="btn btn-primary w-100" onClick={addGlaze}>Add Glaze</button>
+                </div>
+                <div className="col-4">
+                    <button className="btn btn-primary w-100" onClick={addPaint}>Add Paint</button>
                 </div>
             </div>
-            <div className="col-4">
-                {allGlazes}
-            </div>
-            <div className="col-4">
-                {allPaints}
+            <div className="row">
+                <div className="col-4">
+                    <div>
+                        <FormItem onChange={setFormState} />
+                        <BakerItem onChange={setFormState} />
+                        <DryingItem onChange={setFormState} />
+                    </div>
+                </div>
+                <div className="col-4">
+                    {allGlazes}
+                </div>
+                <div className="col-4">
+                    {allPaints}
+                </div>
             </div>
         </div>
     );

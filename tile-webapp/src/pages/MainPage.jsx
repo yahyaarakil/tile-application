@@ -1,5 +1,5 @@
 const user={
-    "role":0
+    "role":2
 }
 
 export const MainPage = () => {

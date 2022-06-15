@@ -115,8 +115,8 @@ class UserItem extends React.Component {
                                 </div>
                                 <div className="col-6">
                                     <p>Operations</p>
-                                    <button className="btn btn-secondary btn-block" onClick={this.handleSubmit}>Add</button><br/>
-                                    <button className="btn btn-secondary btn-block" onClick={this.handleUpdate}>Update </button><br/>
+                                    <button className="btn btn-primary btn-block" onClick={this.handleSubmit}>Add</button><br/><br/>
+                                    <button className="btn btn-primary btn-block" onClick={this.handleUpdate}>Update </button>
                                 </div>
                             </div>
                         </div>

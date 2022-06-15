@@ -98,7 +98,7 @@ class UserItem extends React.Component {
                                         <input type="radio" id="User" value={4} onChange={e => this.setRole(e)} />
                                         <label htmlFor="User">User</label>
                                     </form>
-                                    <button className="btn btn-secondary" onClick={this.handleSubmit}>Register User</button>
+                                    <button className="btn btn-primary" onClick={this.handleSubmit}>Register User</button>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,7 @@ class DeleteUser extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-6">
-                                    <button className="btn btn-secondary" onClick={e => this.handleUserChange(this.state.selectedUser)}>Delete User</button>
+                                    <button className="btn btn-primary" onClick={e => this.handleUserChange(this.state.selectedUser)}>Delete User</button>
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,9 @@ const fetchAllMaterials = async () => {
 }
 
 const addMaterial = async (material) => {
+    if (material.Alternative) {
+        material.Alternative = await Material.findByCode(material.Alternative);
+    }
     newMaterial = new Material(material);
     await newMaterial.save();
     return newMaterial;

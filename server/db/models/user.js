@@ -62,6 +62,15 @@ class User {
         return users;
     }
 
+    async createSession() {
+        let sessionID = Math.floor(Math.random() * 9000000000);
+        await dbConnection.makeQuery(
+            'INSERT INTO SessionIDs (Email, SessionID) VALUES (?, ?)',
+            [ this.email, sessionID ]
+        );
+        return sessionID;
+    }
+
     async save() {
         try {
             if (this.inDB) {

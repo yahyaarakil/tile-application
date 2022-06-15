@@ -11,9 +11,9 @@ class ContainsMaterial {
         this.inDB = inDB ? inDB : false;
     }
 
-    static async findMaterialsByRecipe(recipe) {
+    static async findMaterialsByRecipeID(recipe) {
         try {
-            let [results] = await dbConnection.makeQuery('SELECT * FROM ContainsMaterials WHERE RecipeID=?', [ recipe.id ]);
+            let [results] = await dbConnection.makeQuery('SELECT * FROM ContainsMaterials WHERE RecipeID=?', [ recipe ]);
             if (results.length > 0) {
                 let containsMaterials = []
                 for (let index = 0; index < results.length; index++) {

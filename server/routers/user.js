@@ -27,13 +27,14 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        user = await userController.loginUser(req.body);
-        if (user) {
-            res.status(200).json(user);
+        sessionID = await userController.loginUser(req.body);
+        if (sessionID) {
+            res.status(200).json(sessionID);
         } else {
             res.status(500).json({ 'message': 'Error' });
         }
-    } catch {
+    } catch (error){
+        console.log(error);
         res.status(500).send("ERROR");
     }
 });

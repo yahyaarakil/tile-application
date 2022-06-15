@@ -43,49 +43,22 @@ const MATERIAL_OPTIONS = [
 ]
 
 function GlazeItem({ onChange }) {
-    const [options, setOptions] = useState([{}]);
-
     const [applicationType, setApplicationType] = useState("");
     const [waterContent, setWaterContent] = useState("");
     const [density, setDensity] = useState("");
     const [viscosity, setViscosity] = useState("");
+    const [material, setMaterial] = useState("");
 
     useEffect(() => {
         onChange(form => ({
             ...form,
-            options,
+            material,
             applicationType,
             waterContent,
             density,
             viscosity
         }));
-    }, [options, applicationType, waterContent, density, viscosity])
-
-    function addOption() {
-        if (options.length < 8) {
-            setOptions([
-                ...options,
-                {}
-            ])
-        }
-    }
-
-    function removeOptions() { }
-
-    function handleOption(value) {
-        
-    }
-
-    const allOptions = <>
-        {options.map((option, index) => (
-            <div key={index}>
-                <select className="form-select" onChange={null}>
-                    {MATERIAL_OPTIONS.map((materialOptions) => <option key={materialOptions.code} value={materialOptions.code}>{materialOptions.name}</option>)}
-                </select>
-            </div>
-
-        ))}
-    </>
+    }, [material,applicationType, waterContent, density, viscosity])
 
     return (
         <div className="card" >
@@ -95,9 +68,10 @@ function GlazeItem({ onChange }) {
                     <p>Select material and grammage</p>
                     <div className="row">
                         <div className="col-6">
-                            <button className="btn" onClick={addOption}>+</button>
-                            <button className="btn" onClick={removeOptions}>-</button>
-                            {allOptions}
+                        <p>Material</p>
+                            <select className="form-select" onChange={e=>setMaterial(e.target.value)}>
+                                {MATERIAL_OPTIONS.map((materialOptions) => <option key={materialOptions.code} value={materialOptions.code}>{materialOptions.name}</option>)}
+                            </select>
                         </div>
 
                         <div className="col-6">

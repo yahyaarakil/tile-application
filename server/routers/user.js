@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
         let userSessionID = await userController.loginUser(req.body);
         if (userSessionID.sessionID) {
             res.status(200).json({
-                session: userSessionID.sessionID,
+                token: userSessionID.sessionID,
                 role: userSessionID.user.role
             });
         } else {

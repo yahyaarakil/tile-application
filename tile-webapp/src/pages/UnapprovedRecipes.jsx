@@ -39,10 +39,39 @@ function UnapprovedRecipes() {
         }
     }
 
-    function handleApproveButton() {
-        console.log("approved")
-    }
 
+    const handleApproveButton = async (e) => {
+        e.preventDefault();
+        let recipeId = option.toString().split("-")[0];
+        try {
+            axios.post("http://localhost:8080/approverecipe",
+            {
+                id:recipeId
+            },
+                {
+                    headers: { "content-type": "application/json" ,
+                "token":sessionStorage.getItem("token")}
+                }
+            )
+                .then(function (response) {
+                    if (response.status === 200) {
+
+                        console.log("registered the user");
+                        window.alert('registered the user');
+                        window.location.reload();
+                    }
+                })
+
+        } catch (err) {
+            if (!err?.response) {
+                console.log("No Server Response");
+            }
+            else {
+                console.log("register Failed");
+            }
+        }
+
+    }
 
     function ShowRecipe(props) {
         const [comment, setComment] = useState("");

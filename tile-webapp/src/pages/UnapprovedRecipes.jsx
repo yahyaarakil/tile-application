@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function UnapprovedRecipes() {
@@ -26,7 +26,7 @@ function UnapprovedRecipes() {
             }
         };
         fetchRecipes();
-     }, []);
+    }, []);
     function handleButton() {
         setVisible(true)
     }
@@ -45,19 +45,21 @@ function UnapprovedRecipes() {
         let recipeId = option.toString().split("-")[0];
         try {
             axios.post("http://localhost:8080/approverecipe",
-            {
-                id:recipeId
-            },
                 {
-                    headers: { "content-type": "application/json" ,
-                "token":sessionStorage.getItem("token")}
+                    id: recipeId
+                },
+                {
+                    headers: {
+                        "content-type": "application/json",
+                        "token": sessionStorage.getItem("token")
+                    }
                 }
             )
                 .then(function (response) {
                     if (response.status === 200) {
 
-                        console.log("registered the user");
-                        window.alert('registered the user');
+                        console.log("approved the recipe");
+                        window.alert('approved the recipe');
                         window.location.reload();
                     }
                 })
@@ -80,6 +82,24 @@ function UnapprovedRecipes() {
             console.log(comment)
         }
 
+        const CommentItem = () => {
+            return (
+                <div className="col-6 d-flex flex-column">
+                    <label htmlFor="Comment">Comment:</label>
+                    <input id="Comment" type="text" value={comment} className="form-control" aria-describedby="basic-addon1" onChange={e => setComment(e.target.value)} /><br />
+                    <button className="btn btn-primary" onClick={handleCommentButton}>Add Comment</button><br />
+                    <button className="btn btn-success" onClick={handleApproveButton}>Approve</button>
+                </div>
+            );
+        };
+
+        function CommentItemSelector() {
+
+            if (sessionStorage.role === "1") {
+                return <CommentItem />
+            }
+        }
+
         if (props.visible) {
 
             let recipe = search(props.recipe.toString().split("-")[0]);
@@ -92,41 +112,36 @@ function UnapprovedRecipes() {
                                 <div className="row">
                                     <div className="col-4 d-flex flex-column">
                                         <label htmlFor="ID">ID:</label>
-                                        <input id="ID" type="text" disabled={true} value={recipe.id}></input>  
+                                        <input id="ID" type="text" disabled={true} value={recipe.id}></input>
                                         <label htmlFor="Name">Name:</label>
-                                        <input id="Name" type="text" disabled={true} value={recipe.name}></input>  
+                                        <input id="Name" type="text" disabled={true} value={recipe.name}></input>
                                         <label htmlFor="Size">Size:</label>
-                                        <input id="Size" type="text" disabled={true} value={recipe.size}></input>  
+                                        <input id="Size" type="text" disabled={true} value={recipe.size}></input>
                                         <label htmlFor="CreationDate">CreationDate:</label>
-                                        <input id="CreationDate" type="text" disabled={true} value={recipe.creationDate}></input>  
+                                        <input id="CreationDate" type="text" disabled={true} value={recipe.creationDate}></input>
                                         <label htmlFor="MoldShape">Mold Shape:</label>
-                                        <input id="MoldShape" type="text" disabled={true} value={recipe.moldShape}></input>  
+                                        <input id="MoldShape" type="text" disabled={true} value={recipe.moldShape}></input>
                                         <label htmlFor="BakerName">Baker Name:</label>
-                                        <input id="BakerName" type="text" disabled={true} value={recipe.bakerName}></input>  
+                                        <input id="BakerName" type="text" disabled={true} value={recipe.bakerName}></input>
                                         <label htmlFor="InitTemp">Init Temp:</label>
-                                        <input id="InitTemp" type="text" disabled={true} value={recipe.initTemp}></input>  
+                                        <input id="InitTemp" type="text" disabled={true} value={recipe.initTemp}></input>
                                         <label htmlFor="Humidity">Humidity:</label>
-                                        <input id="Humidity" type="text" disabled={true} value={recipe.humidity}></input>  
+                                        <input id="Humidity" type="text" disabled={true} value={recipe.humidity}></input>
                                         <label htmlFor="DryingDuration">Drying Duration:</label>
-                                        <input id="DryingDuration" type="text" disabled={true} value={recipe.dryingDuration}></input>  
+                                        <input id="DryingDuration" type="text" disabled={true} value={recipe.dryingDuration}></input>
                                         <label htmlFor="DryingTemp">Drying Temp:</label>
-                                        <input id="DryingTemp" type="text" disabled={true} value={recipe.dryingTemp}></input>  
+                                        <input id="DryingTemp" type="text" disabled={true} value={recipe.dryingTemp}></input>
                                         <label htmlFor="BakingDuration">Baking Duration:</label>
-                                        <input id="BakingDuration" type="text" disabled={true} value={recipe.bakingDuration}></input>  
+                                        <input id="BakingDuration" type="text" disabled={true} value={recipe.bakingDuration}></input>
                                         <label htmlFor="BakingTemp">Baking Temp:</label>
-                                        <input id="BakingTemp" type="text" disabled={true} value={recipe.bakingTemp}></input>  
+                                        <input id="BakingTemp" type="text" disabled={true} value={recipe.bakingTemp}></input>
                                         <label htmlFor="PreviousVersion">Previous Version:</label>
-                                        <input id="PreviousVersion" type="text" disabled={true} value={recipe.previousVersion?recipe.previousVersion:""}></input>  
+                                        <input id="PreviousVersion" type="text" disabled={true} value={recipe.previousVersion ? recipe.previousVersion : ""}></input>
                                         <label htmlFor="Approved">Approved:</label>
-                                        <input id="Approved" type="text" disabled={true} value={recipe.approved}></input>  
+                                        <input id="Approved" type="text" disabled={true} value={recipe.approved}></input>
                                     </div>
+                                    <CommentItemSelector />
 
-                                    <div className="col-6 d-flex flex-column">
-                                        <label htmlFor="Comment">Comment:</label>
-                                        <input id="Comment" type="text" value={comment} className="form-control" aria-describedby="basic-addon1" onChange={e => setComment(e.target.value)} /><br />
-                                        <button className="btn btn-primary" onClick={handleCommentButton}>Add Comment</button><br />
-                                        <button className="btn btn-success" onClick={handleApproveButton}>Approve</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +160,7 @@ function UnapprovedRecipes() {
                     <div className="row">
                         <div className="col-6">
                             <select className="form-select" onClick={e => setVisible(false)} onChange={e => setOption(e.target.value)}>
-                            <option key={-1}>select</option>
+                                <option key={-1}>select</option>
                                 {RECIPES.map((recipes) => <option key={recipes.id}>{recipes.id + "-" + recipes.name + " " + recipes.size}</option>)}
                             </select>
                         </div>

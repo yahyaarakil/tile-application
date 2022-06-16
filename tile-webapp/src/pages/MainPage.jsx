@@ -3,14 +3,7 @@ import img1 from '../images/20X90-RIOWOOD-BROWN.jpg';
 import img2 from '../images/30X120-LUXEMBURG-scaled.jpg';
 import img3 from '../images/PEGA-WOOD-MIX-30x120-091221-scaled.jpg';
 
-const user = {
-    "role": 4
-}
-
 export const MainPage = () => {
-
-
-
     let logOutLink = "http://localhost:3000/";
     let recipeLink = "http://localhost:3000/createrecipe";
     let unapprovedLink = "http://localhost:3000/unapprovedrecipes";
@@ -18,17 +11,7 @@ export const MainPage = () => {
     let manageusers = "http://localhost:3000/manageusers";
     let managematerials = "http://localhost:3000/managematerials";
 
-    const NavBar1 = () => {
-        return (
-            <div className="list-group list-group-flush">
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={unapprovedLink}>List Unapproved Recipes</a>
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
-                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
-            </div>
-        );
-    };
-
-    const NavBar0 = () => {
+    const AdminBar = () => {
         return (
             <div className="list-group list-group-flush">
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={manageusers}>Add/Update Users</a>
@@ -39,7 +22,17 @@ export const MainPage = () => {
         );
     };
 
-    const NavBar2 = () => {
+    const ManagerBar = () => {
+        return (
+            <div className="list-group list-group-flush">
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={unapprovedLink}>List Unapproved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
+                <a className="list-group-item list-group-item-action list-group-item-light p-3" href={logOutLink}>Logout</a>
+            </div>
+        );
+    };
+
+    const RDBar = () => {
         return (
             <div className="list-group list-group-flush">
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={recipeLink}>Create Recipe</a>
@@ -50,7 +43,7 @@ export const MainPage = () => {
         );
     };
 
-    const NavBar3 = () => {
+    const UserBar = () => {
         return (
             <div className="list-group list-group-flush">
                 <a className="list-group-item list-group-item-action list-group-item-light p-3" href={approvedLink}>List Approved Recipes</a>
@@ -74,28 +67,30 @@ export const MainPage = () => {
 
     function NavBarItems(props) {
         const option = props.option;
-        if (option === 0) {
-            return <NavBar0 />
+        if (option === 2) {
+            return <AdminBar />
         }
         if (option === 1) {
-            return <NavBar1 />
-        }
-        if (option === 2) {
-            return <NavBar2 />
+            return <ManagerBar />
         }
         if (option === 3) {
-            return <NavBar3 />
+            return <RDBar />
+        }
+        if (option === 4) {
+            return <UserBar />
         }
         if (option === 4) {
             return <TestBar />
         }
     }
 
+    var role = sessionStorage.getItem("role");
+    console.log(role)
     return (
         <>
             <div className="d-flex" id="wrapper">
                 <div className="border-end bg-white" id="sidebar-wrapper">
-                    <NavBarItems option={user.role} />
+                    <NavBarItems option={parseInt(role)} />
                 </div>
                 <div id="page-content-wrapper">
                     <div className="container-fluid">

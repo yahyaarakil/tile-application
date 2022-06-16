@@ -29,6 +29,7 @@ export const LoginPage = () => {
                     if (response.status === 200) {
                     
                         sessionStorage.setItem('token',JSON.stringify(response.data.token));
+                        sessionStorage.setItem('role',JSON.stringify(response.data.role));
                         setSuccess(true);
                     }
                 })

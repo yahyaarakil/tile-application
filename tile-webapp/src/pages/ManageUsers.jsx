@@ -1,44 +1,139 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-class UserItem extends React.Component {
+
+function UserItem() {
+
+    const [Email, setEmail] = useState();
+    const [Password, setPassword] = useState();
+    const [FullName, setFullName] = useState();
+    const [TelephoneNumbers, setTelephoneNumbers] = useState([]);
+    const [Role, setRole] = useState();
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            console.log({
+                Email:Email,
+                Password:Password,
+                FullName:FullName,
+                TelephoneNumbers:[TelephoneNumbers],
+                Role:Role
+            })
+            axios.post("http://localhost:8080/register",
+            {
+                Email:Email,
+                Password:Password,
+                FullName:FullName,
+                TelephoneNumbers:[TelephoneNumbers.toString()],
+                Role:parseInt(Role)
+            },
+                {
+                    headers: { "content-type": "application/json" }
+                }
+            )
+                .then(function (response) {
+                    if (response.status === 200) {
+
+                        console.log("registered the user");
+                        window.alert('registered the user');
+                        window.location.reload();
+                    }
+                })
+
+        } catch (err) {
+            if (!err?.response) {
+                console.log("No Server Response");
+            }
+            else {
+                console.log("register Failed");
+            }
+        }
+
+    }
+
+    return (
+            <div className="card" >
+                <div className="card-body">
+                    <h4 className="card-title">User</h4>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-6">
+                                <p>Full Name</p>
+                                <input type="text" className="form-control" aria-describedby="basic-addon1" onChange={e => setFullName(e.target.value)} />
+                                <p>Email</p>
+                                <input type="text" className="form-control" aria-describedby="basic-addon1" onChange={e => setEmail(e.target.value)} />
+                                <p>Password</p>
+                                <input type="password" className="form-control" aria-describedby="basic-addon1" onChange={e => setPassword(e.target.value)} />
+                                <p>Telephone Number</p>
+                                <input type="tel" id="phone" name="phone" pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}" placeholder="0123-456-7890" className="form-control" aria-describedby="basic-addon1" onChange={e => setTelephoneNumbers(e.target.value)} />
+                                <small>Format: 0123-456-7890</small><br /><br />
+                            </div>
+                            <div className="col-6">
+
+                                <p>Role</p>
+                                <form>
+                                    <input type="radio" id="Manager" value={1} onChange={(e) => setRole(e.target.value)} />
+                                    <label htmlFor="Manager">Manager</label><br />
+
+                                    <input type="radio" id="Admin" value={2} onChange={(e )=> setRole(e.target.value)} />
+                                    <label htmlFor="Admin">Admin</label><br />
+
+                                    <input type="radio" id="R&D" value={3} onChange={(e) => setRole(e.target.value)} />
+                                    <label htmlFor="R&D">R&D</label><br />
+
+                                    <input type="radio" id="User" value={4} onChange={(e) => setRole(e.target.value)} />
+                                    <label htmlFor="User">User</label>
+                                </form>
+                                <button className="btn btn-primary" onClick={handleSubmit}>Register User</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    );
+}
+
+class UserItem2 extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            email: null,
-            password: null,
-            fullName: null,
-            telephoneNumber: null,
-            role: null
+            Email: null,
+            Password: null,
+            FullName: null,
+            TelephoneNumbers: [],
+            Role: null
         }
     }
 
     setFullName = (e) => {
-        this.setState({ fullName: e.target.value })
+        this.setState({ FullName: e.target.value })
     }
 
     setTelephoneNumber = (e) => {
-        this.setState({ telephoneNumber: e.target.value })
+        this.setState({ TelephoneNumbers: e.target.value })
     }
 
     setEmail = (e) => {
-        this.setState({ email: e.target.value })
+        this.setState({ Email: e.target.value })
     }
 
     setPassword = (e) => {
-        this.setState({ password: e.target.value })
+        this.setState({ Password: e.target.value })
     }
 
     setRole = (e) => {
-        this.setState({ role: e.target.value })
+        this.setState({ Role: e.target.value })
     }
 
 
     handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            axios.post("https://aeb157f3-dd85-42fc-9779-3a4328d5a230.mock.pstmn.io/register",
+            console.log(this.state)
+            axios.post("http://localhost:8080/register",
                 this.state,
                 {
                     headers: { "content-type": "application/json" }
@@ -47,7 +142,6 @@ class UserItem extends React.Component {
                 .then(function (response) {
                     if (response.status === 200) {
 
-                        sessionStorage.setItem('token', JSON.stringify(response.data.token));
                         console.log("registered the user");
                     }
                 })
@@ -57,7 +151,7 @@ class UserItem extends React.Component {
                 console.log("No Server Response");
             }
             else {
-                console.log("Login Failed");
+                console.log("register Failed");
             }
         }
 

@@ -1,84 +1,32 @@
 import React, { useState, useEffect } from "react";
-
-const RECIPES = [
-    {
-        "ID": 1,
-        "Name": "recipe",
-        "Size": "3x3",
-        "CreationDate": "2022-06-03T18",
-        "CreateAdBy": "oguzkaganaltas@gmail.com",
-        "MoldShape": "moldshape1",
-        "BakerName": "baker1",
-        "InitTemp": 25.5,
-        "Humidity": 20,
-        "DryingDuration": "00:00:50",
-        "DryingTemp": 90,
-        "BakingDuration": "00:01:20",
-        "BakingTemp": 50,
-        "PreviousVersion": null,
-        "Approved": 0,
-        "Comment": "very good"
-    },
-    {
-        "ID": 4,
-        "Name": "recipe",
-        "Size": "3x3",
-        "CreationDate": "2022-06-04T13",
-        "CreatedBy": "oguzkaganaltas@gmail.com",
-        "MoldShape": "moldshape1",
-        "BakerName": "baker1",
-        "InitTemp": 25.5,
-        "Humidity": 20,
-        "DryingDuration": "00:00:50",
-        "DryingTemp": 90,
-        "BakingDuration": "00:01:20",
-        "BakingTemp": 50,
-        "PreviousVersion": null,
-        "Approved": 0,
-        "Comment": "very good"
-    },
-    {
-        "ID": 7,
-        "Name": "recipe",
-        "Size": "3x3",
-        "CreationDate": "2022-06-04T13",
-        "CreatedBy": "oguzkaganaltas@gmail.com",
-        "MoldShape": "moldshape1",
-        "BakerName": "baker1",
-        "InitTemp": 25.5,
-        "Humidity": 20,
-        "DryingDuration": "00:00:50",
-        "DryingTemp": 90,
-        "BakingDuration": "00:01:20",
-        "BakingTemp": 50,
-        "PreviousVersion": null,
-        "Approved": 0,
-        "Comment": "very good"
-    },
-    {
-        "ID": 10,
-        "Name": "recipe",
-        "Size": "3x3",
-        "CreationDate": "2022-06-14T20",
-        "CreatedBy": "oguzkaganaltas@gmail.com",
-        "MoldShape": "moldshape1",
-        "BakerName": "baker1",
-        "InitTemp": 25.5,
-        "Humidity": 20,
-        "DryingDuration": "00:00:50",
-        "DryingTemp": 90,
-        "BakingDuration": "00:01:20",
-        "BakingTemp": 50,
-        "PreviousVersion": null,
-        "Approved": 0,
-        "Comment": "very good"
-    }
-]
-
+import axios from "axios";
 
 function ApprovedRecipes() {
     const [option, setOption] = useState("");
     const [visible = false, setVisible] = useState("");
+    const [RECIPES, setRecipes] = useState([]);
+
+
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                let response = await axios.get("http://localhost:8080/recipes",
+                    {
+                        headers: {
+                            "content-type": "application/json",
+                            "token": sessionStorage.getItem("token")
+                        },
+                    });
+                setRecipes(response.data);
+                console.log(response.data)
+
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
+        fetchRecipes();
+     }, []);
 
     function handleButton() {
         setVisible(true)
@@ -86,7 +34,7 @@ function ApprovedRecipes() {
 
     function search(key){
         for (let i=0; i < RECIPES.length; i++) {
-            if (RECIPES[i].ID.toString() === key) {
+            if (RECIPES[i].id.toString() === key) {
                 return RECIPES[i];
             }
         }
@@ -106,35 +54,35 @@ function ApprovedRecipes() {
                                 <div className="row">
                                     <div className="col-4 d-flex flex-column">
                                         <label htmlFor="ID">ID:</label>
-                                        <input id="ID" type="text" disabled={true} value={recipe.ID}></input>  
+                                        <input id="ID" type="text" disabled={true} value={recipe.id}></input>  
                                         <label htmlFor="Name">Name:</label>
-                                        <input id="Name" type="text" disabled={true} value={recipe.Name}></input>  
+                                        <input id="Name" type="text" disabled={true} value={recipe.name}></input>  
                                         <label htmlFor="Size">Size:</label>
-                                        <input id="Size" type="text" disabled={true} value={recipe.Size}></input>  
+                                        <input id="Size" type="text" disabled={true} value={recipe.size}></input>  
                                         <label htmlFor="CreationDate">CreationDate:</label>
-                                        <input id="CreationDate" type="text" disabled={true} value={recipe.CreationDate}></input>  
+                                        <input id="CreationDate" type="text" disabled={true} value={recipe.creationDate}></input>  
                                         <label htmlFor="MoldShape">Mold Shape:</label>
-                                        <input id="MoldShape" type="text" disabled={true} value={recipe.MoldShape}></input>  
+                                        <input id="MoldShape" type="text" disabled={true} value={recipe.moldShape}></input>  
                                         <label htmlFor="BakerName">Baker Name:</label>
-                                        <input id="BakerName" type="text" disabled={true} value={recipe.BakerName}></input>  
+                                        <input id="BakerName" type="text" disabled={true} value={recipe.bakerName}></input>  
                                         <label htmlFor="InitTemp">Init Temp:</label>
-                                        <input id="InitTemp" type="text" disabled={true} value={recipe.InitTemp}></input>  
+                                        <input id="InitTemp" type="text" disabled={true} value={recipe.initTemp}></input>  
                                         <label htmlFor="Humidity">Humidity:</label>
-                                        <input id="Humidity" type="text" disabled={true} value={recipe.Humidity}></input>  
+                                        <input id="Humidity" type="text" disabled={true} value={recipe.humidity}></input>  
                                         <label htmlFor="DryingDuration">Drying Duration:</label>
-                                        <input id="DryingDuration" type="text" disabled={true} value={recipe.DryingDuration}></input>  
+                                        <input id="DryingDuration" type="text" disabled={true} value={recipe.dryingDuration}></input>  
                                         <label htmlFor="DryingTemp">Drying Temp:</label>
-                                        <input id="DryingTemp" type="text" disabled={true} value={recipe.DryingTemp}></input>  
+                                        <input id="DryingTemp" type="text" disabled={true} value={recipe.dryingTemp}></input>  
                                         <label htmlFor="BakingDuration">Baking Duration:</label>
-                                        <input id="BakingDuration" type="text" disabled={true} value={recipe.BakingDuration}></input>  
+                                        <input id="BakingDuration" type="text" disabled={true} value={recipe.bakingDuration}></input>  
                                         <label htmlFor="BakingTemp">Baking Temp:</label>
-                                        <input id="BakingTemp" type="text" disabled={true} value={recipe.BakingTemp}></input>  
+                                        <input id="BakingTemp" type="text" disabled={true} value={recipe.bakingTemp}></input>  
                                         <label htmlFor="PreviousVersion">Previous Version:</label>
-                                        <input id="PreviousVersion" type="text" disabled={true} value={recipe.PreviousVersion?recipe.PreviousVersion:""}></input>  
+                                        <input id="PreviousVersion" type="text" disabled={true} value={recipe.previousVersion?recipe.previousVersion:""}></input>  
                                         <label htmlFor="Approved">Approved:</label>
-                                        <input id="Approved" type="text" disabled={true} value={recipe.Approved}></input>  
+                                        <input id="Approved" type="text" disabled={true} value={recipe.approved}></input>  
                                         <label htmlFor="Comment">Comment:</label>
-                                        <input id="Comment" type="text" disabled={true} value={recipe.Comment}></input>  
+                                        <input id="Comment" type="text" disabled={true} value={recipe.comment}></input>  
 
                                     </div>
                                 </div>
@@ -155,7 +103,7 @@ function ApprovedRecipes() {
                     <div className="row">
                         <div className="col-6">
                             <select className="form-select" onClick={e => setVisible(false)} onChange={e => setOption(e.target.value)}>
-                                {RECIPES.map((recipes) => <option key={recipes.ID}>{recipes.ID + "-" + recipes.Name + " " + recipes.Size}</option>)}
+                                {RECIPES.map((recipes) => <option key={recipes.id}>{recipes.id + "-" + recipes.name + " " + recipes.size}</option>)}
                             </select>
                         </div>
                         <div className="col-6">

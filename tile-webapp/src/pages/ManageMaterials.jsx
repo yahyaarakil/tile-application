@@ -6,32 +6,32 @@ class UserItem extends React.Component {
     constructor() {
         super();
         this.state = {
-            code: null,
-            company: null,
-            name: null,
-            price: null,
-            alternative: null
+            Code: null,
+            Company: null,
+            Name: null,
+            Price: null,
+            Alternative: null
         }
     }
 
     setName = (e) => {
-        this.setState({ name: e.target.value })
+        this.setState({ Name: e.target.value })
     }
 
     setCode = (e) => {
-        this.setState({ code: e.target.value })
+        this.setState({ Code: e.target.value })
     }
 
     setCompany= (e) => {
-        this.setState({ company: e.target.value })
+        this.setState({ Company: e.target.value })
     }
 
     setPrice = (e) => {
-        this.setState({ price: e.target.value })
+        this.setState({ Price: e.target.value })
     }
 
     setAlternative = (e) => {
-        this.setState({ alternative: e.target.value })
+        this.setState({ Alternative: e.target.value })
     }
 
 
@@ -39,7 +39,7 @@ class UserItem extends React.Component {
         e.preventDefault();
         try {
             console.log(this.state)
-            axios.post("https://be1a7fd1-6e2e-4b15-b624-a7bb88cf47cc.mock.pstmn.io/addmaterial",
+            axios.post("http://localhost:8080/addmaterial",
                 this.state,
                 {
                     headers: { "content-type": "application/json" }
@@ -48,7 +48,6 @@ class UserItem extends React.Component {
                 .then(function (response) {
                     if (response.status === 200) {
 
-                        sessionStorage.setItem('token', JSON.stringify(response.data.token));
                         console.log("registered the material");
                     }
                 })
@@ -68,7 +67,7 @@ class UserItem extends React.Component {
         e.preventDefault();
         try {
             console.log(this.state)
-            axios.post("https://aeb157f3-dd85-42fc-9779-3a4328d5a230.mock.pstmn.io/updatematerial",
+            axios.post("http://localhost:8080/addmaterial",
                 this.state,
                 {
                     headers: { "content-type": "application/json" }
@@ -77,7 +76,6 @@ class UserItem extends React.Component {
                 .then(function (response) {
                     if (response.status === 200) {
 
-                        sessionStorage.setItem('token', JSON.stringify(response.data.token));
                         console.log("registered the material");
                     }
                 })

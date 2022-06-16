@@ -1,52 +1,13 @@
 import React, { useState, useEffect } from "react";
-
-const MATERIAL_OPTIONS = [
-    {
-        "name": "red",
-        "code": 1,
-        "company": "dyo",
-        "price": 123
-    },
-    {
-        "name": "green",
-        "code": 2,
-        "company": "dyo",
-        "price": 456
-    },
-    {
-        "name": "blue",
-        "code": 3,
-        "company": "filli boya",
-        "price": 789
-    },
-    {
-        "name": "glaze a",
-        "code": 4,
-        "company": "glazemaster",
-        "price": 789
-    },
-    {
-        "name": "glaze b",
-        "code": 5,
-        "company": "glazemaster",
-        "price": 789,
-        "alternative": {
-            "code": 4
-        }
-    },
-    {
-        "name": "clay a",
-        "code": 6,
-        "company": "clay",
-        "price": 789
-    }
-]
-
+import axios from "axios";
 
 function PaintItem({ onChange }) {
 
     const [grammage, setGrammage] = useState("");
     const [material, setMaterial] = useState("");
+    const [MATERIAL_OPTIONS, setMaterials] = useState([]);
+
+
 
     useEffect(() => {
         onChange(form => ({
@@ -56,6 +17,24 @@ function PaintItem({ onChange }) {
         }));
     }, [grammage, material])
 
+    useEffect(() => {
+        const fetchMaterials = async () => {
+            try {
+                let response = await axios.get("http://localhost:8080/materials",
+                    {
+                        headers: {
+                            "content-type": "application/json",
+                            "token": sessionStorage.getItem("token")
+                        },
+                    });
+                setMaterials(response.data);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
+        fetchMaterials();
+     }, []);
 
     return (
         <div className="card">
@@ -72,7 +51,7 @@ function PaintItem({ onChange }) {
                                     type="number" step="0.01" className="form-control" aria-describedby="basic-addon1" />
                             </div>
                             <div className="col-6">
-                                <select className="form-select" onChange={e=>setMaterial(e.target.value)}>
+                                <select className="form-select" onChange={e => setMaterial(e.target.value)}>
                                     {MATERIAL_OPTIONS.map((materialOptions) => <option key={materialOptions.code} value={materialOptions.code}>{materialOptions.name}</option>)}
                                 </select>
                             </div>

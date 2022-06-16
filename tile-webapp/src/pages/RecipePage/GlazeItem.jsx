@@ -1,46 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-const MATERIAL_OPTIONS = [
-    {
-        "name": "red",
-        "code": 1,
-        "company": "dyo",
-        "price": 123
-    },
-    {
-        "name": "green",
-        "code": 2,
-        "company": "dyo",
-        "price": 456
-    },
-    {
-        "name": "blue",
-        "code": 3,
-        "company": "filli boya",
-        "price": 789
-    },
-    {
-        "name": "glaze a",
-        "code": 4,
-        "company": "glazemaster",
-        "price": 789
-    },
-    {
-        "name": "glaze b",
-        "code": 5,
-        "company": "glazemaster",
-        "price": 789,
-        "alternative": {
-            "code": 4
-        }
-    },
-    {
-        "name": "clay a",
-        "code": 6,
-        "company": "clay",
-        "price": 789
-    }
-]
+import axios from "axios";
 
 function GlazeItem({ onChange }) {
     const [applicationType, setApplicationType] = useState("");
@@ -48,6 +7,7 @@ function GlazeItem({ onChange }) {
     const [density, setDensity] = useState("");
     const [viscosity, setViscosity] = useState("");
     const [material, setMaterial] = useState("");
+    const [MATERIAL_OPTIONS, setMaterials] = useState([]);
 
     useEffect(() => {
         onChange(form => ({
@@ -59,6 +19,25 @@ function GlazeItem({ onChange }) {
             viscosity
         }));
     }, [material,applicationType, waterContent, density, viscosity])
+
+    useEffect(() => {
+        const fetchMaterials = async () => {
+            try {
+                let response = await axios.get("http://localhost:8080/materials",
+                    {
+                        headers: {
+                            "content-type": "application/json",
+                            "token": sessionStorage.getItem("token")
+                        },
+                    });
+                setMaterials(response.data);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
+        fetchMaterials();
+     }, []);
 
     return (
         <div className="card" >

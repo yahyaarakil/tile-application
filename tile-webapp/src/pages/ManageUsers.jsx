@@ -14,13 +14,6 @@ function UserItem() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log({
-                Email:Email,
-                Password:Password,
-                FullName:FullName,
-                TelephoneNumbers:[TelephoneNumbers],
-                Role:Role
-            })
             axios.post("http://localhost:8080/register",
             {
                 Email:Email,

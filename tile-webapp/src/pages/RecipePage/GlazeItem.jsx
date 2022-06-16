@@ -18,7 +18,7 @@ function GlazeItem({ onChange }) {
             density,
             viscosity
         }));
-    }, [material,applicationType, waterContent, density, viscosity])
+    }, [material, applicationType, waterContent, density, viscosity])
 
     useEffect(() => {
         const fetchMaterials = async () => {
@@ -37,7 +37,7 @@ function GlazeItem({ onChange }) {
             }
         };
         fetchMaterials();
-     }, []);
+    }, []);
 
     return (
         <div className="card" >
@@ -47,8 +47,9 @@ function GlazeItem({ onChange }) {
                     <p>Select material and grammage</p>
                     <div className="row">
                         <div className="col-6">
-                        <p>Material</p>
-                            <select className="form-select" onChange={e=>setMaterial(e.target.value)}>
+                            <p>Material</p>
+                            <select className="form-select" onChange={e => setMaterial(e.target.value)}>
+                                <option key={-1}>select</option>
                                 {MATERIAL_OPTIONS.map((materialOptions) => <option key={materialOptions.code} value={materialOptions.code}>{materialOptions.name}</option>)}
                             </select>
                         </div>

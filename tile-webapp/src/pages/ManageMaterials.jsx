@@ -42,13 +42,16 @@ class UserItem extends React.Component {
             axios.post("http://localhost:8080/addmaterial",
                 this.state,
                 {
-                    headers: { "content-type": "application/json" }
+                    headers: { "content-type": "application/json",
+                                "token":sessionStorage.getItem("token") }
                 }
             )
                 .then(function (response) {
                     if (response.status === 200) {
 
                         console.log("registered the material");
+                        window.alert('registered the material');
+                        window.location.reload();
                     }
                 })
 
@@ -77,6 +80,8 @@ class UserItem extends React.Component {
                     if (response.status === 200) {
 
                         console.log("registered the material");
+                        window.alert('registered the material');
+                        window.location.reload();
                     }
                 })
 

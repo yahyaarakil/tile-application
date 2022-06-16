@@ -116,6 +116,7 @@ function UnapprovedRecipes() {
                     <div className="row">
                         <div className="col-6">
                             <select className="form-select" onClick={e => setVisible(false)} onChange={e => setOption(e.target.value)}>
+                            <option key={-1}>select</option>
                                 {RECIPES.map((recipes) => <option key={recipes.id}>{recipes.id + "-" + recipes.name + " " + recipes.size}</option>)}
                             </select>
                         </div>

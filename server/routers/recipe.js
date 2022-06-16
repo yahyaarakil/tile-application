@@ -6,9 +6,6 @@ let router = express.Router();
 
 router.get('/recipes', async (req, res) => {
     try {
-        console.log(req.query.a);
-        console.log(typeof(req.query.a));
-        Boolean.par
         res.status(200).json(await recipeController.fetchAllRecipes(req.query.a.toLowerCase() === 'true'));
     } catch {
         res.status(500).send("ERROR");

@@ -20,3 +20,4 @@ app.listen(process.env.HTTPS_PORT, async () => {
     console.log('Starting server');
     await createTables();
 });
+

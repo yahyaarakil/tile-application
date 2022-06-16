@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import BakerItem from './BakerItem';
 import FormItem from './FormItem';
@@ -8,33 +8,64 @@ import GlazeItem from './GlazeItem';
 
 export const RecipePage = () => {
     const [formState, setFormState] = useState({
-        productName: "",
-        size: "",
-        moldShape: "",
-        creationDate: "",
-        formNo: "",
-        bakerName: "",
-        bakingDuration: "",
-        bakingTemp: "",
-        dryingTemp: "",
-        dryingDuration: "",
-        humidity: "",
-        initialTemp: "",
-        glazes: [],
-        paints: []
+        Name: "",
+        Size: "",
+        MoldShape: "",
+        FormNo: "",
+        BakerName: "",
+        BakingDuration: "",
+        BakingTemp: "",
+        DryingTemp: "",
+        DryingDuration: "",
+        Humidity: "",
+        InitialTemp: "",
+        Materials: [],
+        Paints: []
     });
 
-    const uniqueIdCounter = useRef(0);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(formState)
+        try {
+            console.log("asdasdasd")
+            console.log(formState)
+            
+            axios.post("http://localhost:8080/addrecipe",
+                formState
+                ,
+                {
+                    headers: {
+                        "content-type": "application/json",
+                        "token": sessionStorage.getItem("token")
+                    }
+                }
+            )
+                .then(function (response) {
+                    if (response.status === 200) {
 
+                        console.log("added the recipe");
+                        window.alert('added the recipe');
+                        window.location.reload();
+                    }
+                })
 
-    const submit = async () => {
-        console.log(formState);
+        } catch (err) {
+            if (!err?.response) {
+                console.log("No Server Response");
+            }
+            else {
+                console.log("add Failed");
+            }
+        }
+
     }
+
+    const uniqueIdCounter = useRef(0);
 
     function addGlaze() {
         setFormState(form => ({
             ...form,
-            glazes: [...form.glazes, {
+            Materials: [...form.Materials, {
                 id: ++uniqueIdCounter.current,
             }]
         }))
@@ -43,7 +74,7 @@ export const RecipePage = () => {
     function addPaint() {
         setFormState(form => ({
             ...form,
-            paints: [...form.paints, {
+            Paints: [...form.Paints, {
                 id: ++uniqueIdCounter.current,
             }]
         }))
@@ -52,30 +83,30 @@ export const RecipePage = () => {
     function paintChange(id, value) {
         setFormState(form => ({
             ...form,
-            paints: form.paints.map((paint) => paint.id === id ? {id, ...value} : paint)
-        })) 
+            Paints: form.Paints.map((paint) => paint.id === id ? { id, ...value } : paint)
+        }))
     }
 
     function glazeChange(id, value) {
         setFormState(form => ({
             ...form,
-            glazes: form.glazes.map((glaze) => glaze.id === id ? {id, ...value} : glaze)
-        })) 
+            Materials: form.Materials.map((glaze) => glaze.id === id ? { id, ...value } : glaze)
+        }))
     }
 
-    const allGlazes = formState.glazes.map((glaze) =>
+    const allMaterials = formState.Materials.map((glaze) =>
         <GlazeItem key={glaze.id} onChange={(value) => glazeChange(glaze.id, value)} />
     );
 
-    const allPaints = formState.paints.map((paint, index) =>
-        <PaintItem key={paint.id} onChange={(value) => paintChange(paint.id, value)}  />
+    const allPaints = formState.Paints.map((paint, index) =>
+        <PaintItem key={paint.id} onChange={(value) => paintChange(paint.id, value)} />
     );
 
     return (
         <div>
             <div className="row mb-4">
                 <div className="col-4">
-                    <button className="btn btn-success w-100" onClick={submit}>Save Recipe</button>
+                    <button className="btn btn-success w-100" onClick={handleSubmit}>Save Recipe</button>
                 </div>
                 <div className="col-4">
                     <button className="btn btn-primary w-100" onClick={addGlaze}>Add Glaze</button>
@@ -93,7 +124,7 @@ export const RecipePage = () => {
                     </div>
                 </div>
                 <div className="col-4">
-                    {allGlazes}
+                    {allMaterials}
                 </div>
                 <div className="col-4">
                     {allPaints}
@@ -102,9 +133,4 @@ export const RecipePage = () => {
         </div>
     );
 };
-
-
-
-
-
 

@@ -2,20 +2,20 @@ import React, { useState, useEffect } from "react";
 
 function DryingItem({onChange}) {
 
-    const [dryingTemp, setDryingTemp] = useState();
-    const [dryingDuration, setDryingDuration] = useState();
-    const [humidity, setHumidity] = useState();
-    const [initialTemp, setInitialTemp] = useState();
+    const [DryingTemp, setDryingTemp] = useState();
+    const [DryingDuration, setDryingDuration] = useState();
+    const [Humidity, setHumidity] = useState();
+    const [InitTemp, setInitialTemp] = useState();
 
     useEffect(() => {
         onChange(prevValue => ({
             ...prevValue,
-            dryingTemp,
-            dryingDuration,
-            humidity,
-            initialTemp,
+            DryingTemp:Number(DryingTemp),
+            DryingDuration:Number(DryingDuration),
+            Humidity:Number(Humidity),
+            InitTemp:Number(InitTemp),
         }));
-    }, [dryingTemp, dryingDuration, humidity, initialTemp]);
+    }, [DryingTemp, DryingDuration, Humidity, InitTemp]);
 
     return (
         <div className="card" style={{marginBottom:"20px"}}>

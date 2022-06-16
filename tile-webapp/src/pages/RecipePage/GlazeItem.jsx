@@ -11,12 +11,13 @@ function GlazeItem({ onChange }) {
 
     useEffect(() => {
         onChange({
-            code: material,
+            code:Number(material),
             info:{
+                amount:Number(31),
                 applicationType,
-                waterContent,
-                density,
-                viscosity
+                waterContent:Number(waterContent),
+                density:Number(density),
+                viscosity:Number(viscosity)
             }
             
         });

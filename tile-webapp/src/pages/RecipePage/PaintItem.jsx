@@ -12,9 +12,9 @@ function PaintItem({ onChange }) {
     useEffect(() => {
         onChange({
             info:{ 
-                grammage: grammage
+                grammage: Number(grammage)
             },
-            code: material
+            code: Number(material)
         });
     }, [grammage, material])
 

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 
 function BakerItem({ onChange }) {
-    const [bakerName, setBakerName] = useState();
-    const [bakingDuration, setBakingDuration] = useState();
-    const [bakingTemp, setBakingTemperature] = useState();
+    const [BakerName, setBakerName] = useState();
+    const [BakingDuration, setBakingDuration] = useState();
+    const [BakingTemp, setBakingTemperature] = useState();
 
 
     useEffect(() => {
         onChange(prevValue => ({
             ...prevValue,
-            bakerName,
-            bakingDuration,
-            bakingTemp,
+            BakerName,
+            BakingDuration:Number(BakingDuration),
+            BakingTemp:Number(BakingTemp),
         }));
-    }, [bakerName, bakingDuration, bakingTemp]);
+    }, [BakerName, BakingDuration, BakingTemp]);
 
     return (
         <div className="card" style={{marginBottom:"20px"}}>

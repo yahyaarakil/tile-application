@@ -20,7 +20,8 @@ router.post('/register', async (req, res) => {
         } else {
             res.status(500).json({ 'message': 'Error' });
         }
-    } catch{
+    } catch (error){
+        console.log(error)
         res.status(500).send("ERROR");
     }
 });

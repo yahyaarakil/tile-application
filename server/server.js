@@ -1,9 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const createTables = require('./db/create_tables').createTables;
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 const recipeRouter = require('./routers/recipe');
 const userRouter = require('./routers/user');
 const materialRouter = require('./routers/material');

@@ -34,7 +34,7 @@ function PaintItem({ onChange }) {
             }
         };
         fetchMaterials();
-     }, []);
+    }, []);
 
     return (
         <div className="card">
@@ -52,6 +52,7 @@ function PaintItem({ onChange }) {
                             </div>
                             <div className="col-6">
                                 <select className="form-select" onChange={e => setMaterial(e.target.value)}>
+                                    <option key={-1}>select</option>
                                     {MATERIAL_OPTIONS.map((materialOptions) => <option key={materialOptions.code} value={materialOptions.code}>{materialOptions.name}</option>)}
                                 </select>
                             </div>

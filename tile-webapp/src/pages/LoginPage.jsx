@@ -18,8 +18,8 @@ export const LoginPage = () => {
         try {
             axios.post("http://localhost:8080/login",
                 {
-                    email: email,
-                    password: password,
+                    Email: email,
+                    Password: password,
                 },
                 {
                     headers: { "content-type": "application/json" }

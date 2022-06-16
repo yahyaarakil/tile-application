@@ -81,9 +81,6 @@ function ApprovedRecipes() {
                                         <input id="PreviousVersion" type="text" disabled={true} value={recipe.previousVersion ? recipe.previousVersion : ""}></input>
                                         <label htmlFor="Approved">Approved:</label>
                                         <input id="Approved" type="text" disabled={true} value={recipe.approved}></input>
-                                        <label htmlFor="Comment">Comment:</label>
-                                        <input id="Comment" type="text" disabled={true} value={recipe.comment}></input>
-
                                     </div>
                                 </div>
                             </div>

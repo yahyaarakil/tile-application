@@ -6,7 +6,6 @@ function UnapprovedRecipes() {
     const [visible = false, setVisible] = useState("");
     const [RECIPES, setRecipes] = useState([]);
 
-
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
@@ -18,8 +17,6 @@ function UnapprovedRecipes() {
                         },
                     });
                 setRecipes(response.data);
-                console.log(response.data)
-
             }
             catch (error) {
                 console.log(error);
@@ -75,16 +72,55 @@ function UnapprovedRecipes() {
 
     }
 
-    function ShowRecipe(props) {
-        const [comment, setComment] = useState("");
 
-        function handleCommentButton() {
-            console.log(comment)
-        }
+
+    function ShowRecipe(props) {
+        const userRole = sessionStorage.role;
 
         const CommentItem = () => {
+
+            const [comment, setComment] = useState("");
+
+
+            const handleCommentButton = async (e) => {
+                e.preventDefault();
+
+                let recipeId = option.toString().split("-")[0];
+                try {
+                    axios.post("http://localhost:8080/addcomment",
+                        {
+                            recipeId: recipeId,
+                            comment: comment
+                        },
+                        {
+                            headers: {
+                                "content-type": "application/json",
+                                "token": sessionStorage.token
+                            }
+                        }
+                    )
+                        .then(function (response) {
+                            if (response.status === 200) {
+
+                                console.log("commented the recipe");
+                                window.alert('commented the recipe');
+                                window.location.reload();
+                            }
+                        })
+
+                } catch (err) {
+                    if (!err?.response) {
+                        console.log("No Server Response");
+                    }
+                    else {
+                        console.log("comment Failed");
+                    }
+                }
+            }
+
+
             return (
-                <div className="col-6 d-flex flex-column">
+                <div className="col-4 d-flex flex-column">
                     <label htmlFor="Comment">Comment:</label>
                     <input id="Comment" type="text" value={comment} className="form-control" aria-describedby="basic-addon1" onChange={e => setComment(e.target.value)} /><br />
                     <button className="btn btn-primary" onClick={handleCommentButton}>Add Comment</button><br />
@@ -94,14 +130,36 @@ function UnapprovedRecipes() {
         };
 
         function CommentItemSelector() {
-
-            if (sessionStorage.role === "1") {
-                return <CommentItem />
+            if (userRole === "1") {
+                return <CommentItem />;
             }
         }
 
-        if (props.visible) {
 
+        const [COMMENTS, setComments] = useState([]);
+
+
+        useEffect(() => {
+            const fetchComments = async () => {
+                try {
+                    let response = await axios.get("http://localhost:8080/comments/" + option.toString().split("-")[0],
+                        {
+                            headers: {
+                                "content-type": "application/json",
+                                "token": sessionStorage.getItem("token")
+                            },
+                        });
+                    setComments(response.data);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            };
+            fetchComments();
+        }, []);
+
+
+        if (props.visible) {
             let recipe = search(props.recipe.toString().split("-")[0]);
             return (
                 <div className="newItem">
@@ -139,6 +197,17 @@ function UnapprovedRecipes() {
                                         <input id="PreviousVersion" type="text" disabled={true} value={recipe.previousVersion ? recipe.previousVersion : ""}></input>
                                         <label htmlFor="Approved">Approved:</label>
                                         <input id="Approved" type="text" disabled={true} value={recipe.approved}></input>
+                                    </div>
+                                    <div className="col-4 d-flex flex-column">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <h4 className="card-title">Comments</h4>
+                                                <ol className="newItem" onLoad={e => setComments(e.target.value)}>
+                                                    {COMMENTS.map((materialOptions) => <li key={materialOptions.length} value={materialOptions.comment}>{materialOptions.comment + " by " + materialOptions.manager}</li>)}
+                                                </ol>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <CommentItemSelector />
 

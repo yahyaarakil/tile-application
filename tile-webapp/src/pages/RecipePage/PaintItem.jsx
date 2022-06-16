@@ -10,11 +10,12 @@ function PaintItem({ onChange }) {
 
 
     useEffect(() => {
-        onChange(form => ({
-            ...form,
-            grammage,
-            material
-        }));
+        onChange({
+            info:{ 
+                grammage: grammage
+            },
+            code: material
+        });
     }, [grammage, material])
 
     useEffect(() => {
@@ -37,7 +38,7 @@ function PaintItem({ onChange }) {
     }, []);
 
     return (
-        <div className="card">
+        <div className="card " style={{marginBottom:"20px", "height":"200px" }}>
             <div className="card-body">
                 <div className="mb-5">
                     <h4 className="card-title">Paint</h4>

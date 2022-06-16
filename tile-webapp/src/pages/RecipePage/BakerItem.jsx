@@ -16,7 +16,7 @@ function BakerItem({ onChange }) {
     }, [bakerName, bakingDuration, bakingTemp]);
 
     return (
-        <div className="card">
+        <div className="card" style={{marginBottom:"20px"}}>
             <div className="card-body">
                 <h4 className="card-title">Baker</h4>
                 <div className="container">

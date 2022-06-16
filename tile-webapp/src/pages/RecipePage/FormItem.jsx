@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 function FormItem({ onChange }) {
-    const [productName, setProductName] = useState();
-    const [size, setSize] = useState();
-    const [moldShape, setMoldShape] = useState();
-    const [creationDate, setCreationDate] = useState();
-    const [formNo, setFormNo] = useState();
+    const [productName, setProductName] = useState("");
+    const [size, setSize] = useState("");
+    const [moldShape, setMoldShape] = useState("");
+    const [creationDate, setCreationDate] = useState("");
+    const [formNo, setFormNo] = useState("");
 
     useEffect(() => {
         onChange(prevValue => ({
@@ -20,7 +20,7 @@ function FormItem({ onChange }) {
 
     return (
 
-        <div className="card">
+        <div className="card" style={{marginBottom:"20px"}}>
             <div className="card-body">
                 <h4 className="card-title">Form</h4>
                 <div className="container">

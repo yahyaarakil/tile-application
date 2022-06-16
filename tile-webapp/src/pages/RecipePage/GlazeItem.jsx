@@ -10,14 +10,16 @@ function GlazeItem({ onChange }) {
     const [MATERIAL_OPTIONS, setMaterials] = useState([]);
 
     useEffect(() => {
-        onChange(form => ({
-            ...form,
-            material,
-            applicationType,
-            waterContent,
-            density,
-            viscosity
-        }));
+        onChange({
+            code: material,
+            info:{
+                applicationType,
+                waterContent,
+                density,
+                viscosity
+            }
+            
+        });
     }, [material, applicationType, waterContent, density, viscosity])
 
     useEffect(() => {
@@ -40,7 +42,7 @@ function GlazeItem({ onChange }) {
     }, []);
 
     return (
-        <div className="card" >
+        <div className="card " style={{marginBottom:"20px", "height":"420px" }}>
             <div className="card-body">
                 <div className="newItem">
                     <h4>Material</h4>

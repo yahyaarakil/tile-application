@@ -18,7 +18,7 @@ function DryingItem({onChange}) {
     }, [dryingTemp, dryingDuration, humidity, initialTemp]);
 
     return (
-        <div className="card" >
+        <div className="card" style={{marginBottom:"20px"}}>
             <div className="card-body">
                 <h4 className="card-title">Dryer</h4>
                 <div className="container">

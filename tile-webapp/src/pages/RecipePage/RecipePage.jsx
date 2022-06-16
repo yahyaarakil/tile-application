@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import BakerItem from './BakerItem';
 import FormItem from './FormItem';
@@ -6,9 +6,7 @@ import DryingItem from './DryingItem';
 import PaintItem from './PaintItem';
 import GlazeItem from './GlazeItem';
 
-
 export const RecipePage = () => {
-
     const [formState, setFormState] = useState({
         productName: "",
         size: "",
@@ -26,6 +24,9 @@ export const RecipePage = () => {
         paints: []
     });
 
+    const uniqueIdCounter = useRef(0);
+
+
     const submit = async () => {
         console.log(formState);
     }
@@ -34,7 +35,7 @@ export const RecipePage = () => {
         setFormState(form => ({
             ...form,
             glazes: [...form.glazes, {
-
+                id: ++uniqueIdCounter.current,
             }]
         }))
     }
@@ -43,34 +44,38 @@ export const RecipePage = () => {
         setFormState(form => ({
             ...form,
             paints: [...form.paints, {
-
+                id: ++uniqueIdCounter.current,
             }]
         }))
     }
 
-
-    function glazeChange(index, attr) {
+    function paintChange(id, value) {
         setFormState(form => ({
             ...form,
-            glazes: form.glazes.map((glaze, targetIndex) => index === targetIndex ? {
-                ...attr
-            } : glaze)
-        }))
+            paints: form.paints.map((paint) => paint.id === id ? {id, ...value} : paint)
+        })) 
     }
 
-    const allGlazes = formState.glazes.map((material, index) =>
-        <GlazeItem key={index} onChange={setFormState} />
+    function glazeChange(id, value) {
+        setFormState(form => ({
+            ...form,
+            glazes: form.glazes.map((glaze) => glaze.id === id ? {id, ...value} : glaze)
+        })) 
+    }
+
+    const allGlazes = formState.glazes.map((glaze) =>
+        <GlazeItem key={glaze.id} onChange={(value) => glazeChange(glaze.id, value)} />
     );
 
-    const allPaints = formState.paints.map((material, index) =>
-        <PaintItem onChange={setFormState} key={index} />
+    const allPaints = formState.paints.map((paint, index) =>
+        <PaintItem key={paint.id} onChange={(value) => paintChange(paint.id, value)}  />
     );
 
     return (
-        <div className="newItem">
-            <div className="row">
+        <div>
+            <div className="row mb-4">
                 <div className="col-4">
-                    <button className="btn btn-primary w-100" onClick={submit}>Save Recipe</button>
+                    <button className="btn btn-success w-100" onClick={submit}>Save Recipe</button>
                 </div>
                 <div className="col-4">
                     <button className="btn btn-primary w-100" onClick={addGlaze}>Add Glaze</button>

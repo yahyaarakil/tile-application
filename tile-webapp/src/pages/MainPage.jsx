@@ -11,7 +11,7 @@ export const MainPage = () => {
 
 
 
-    let logOutLink = "http://localhost:3000/login";
+    let logOutLink = "http://localhost:3000/";
     let recipeLink = "http://localhost:3000/createrecipe";
     let unapprovedLink = "http://localhost:3000/unapprovedrecipes";
     let approvedLink = "http://localhost:3000/approvedrecipes";

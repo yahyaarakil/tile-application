@@ -10,7 +10,7 @@ function ApprovedRecipes() {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                let response = await axios.get("http://localhost:8080/recipes",
+                let response = await axios.get("http://localhost:8080/recipes?a=true",
                     {
                         headers: {
                             "content-type": "application/json",

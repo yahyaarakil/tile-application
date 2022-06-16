@@ -12,6 +12,9 @@ class User {
     }
 
     static async findBy(key, value) {
+        if (!value && value !== false) {
+            return null;
+        }
         try {
             let [results] = await dbConnection.makeQuery(`SELECT * FROM TileUsers WHERE ${key}=?;`, [ value ]);
             if (results.length > 0) {
@@ -47,6 +50,25 @@ class User {
         } else {
             return null;
         }
+    }
+
+    static async getAll() {
+        let [emails] = await dbConnection.makeQuery('SELECT Email FROM TileUsers');
+        let users = [];
+        console.log(emails[0])
+        for (var i = 0; i < emails.length; i++) {
+            users.push(await this.findByEmail(emails[i].Email));
+        }
+        return users;
+    }
+
+    async createSession() {
+        let sessionID = Math.floor(Math.random() * 9000000000);
+        await dbConnection.makeQuery(
+            'INSERT INTO SessionIDs (Email, SessionID) VALUES (?, ?)',
+            [ this.email, sessionID ]
+        );
+        return sessionID;
     }
 
     async save() {

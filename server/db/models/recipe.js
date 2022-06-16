@@ -53,9 +53,10 @@ class Recipe {
             recipe.Unapproval = await dbConnection.makeQuery('SELECT * FROM UnapprovedRecipes WHERE ID=?', [ recipe.ID ])[0];
         }
         // populate materials and paints
-        recipe.paints = ContainsPaint.findMaterialsByRecipe(recipe);        
-        recipe.materials = ContainsMaterial.findMaterialsByRecipe(recipe);        
-        return new Recipe(recipe);
+        recipe.Paints = await ContainsPaint.findMaterialsByRecipeID(recipe.ID);
+        recipe.Materials = await ContainsMaterial.findMaterialsByRecipeID(recipe.ID);
+        let newRecipe = new Recipe(recipe);
+        return newRecipe;
     }
 
     static async findByID(value) {
@@ -215,12 +216,12 @@ class Recipe {
 
             for (let index = 0; index < this.materials.length; index++) {
                 const material = this.materials[index];
-                material.save();
+                await material.save();
             }
 
             for (let index = 0; index < this.paints.length; index++) {
                 const paint = this.paints[index];
-                paint.save();
+                await paint.save();
             }
 
             return this;

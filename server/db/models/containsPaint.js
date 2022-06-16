@@ -8,9 +8,9 @@ class ContainsPaint {
         this.inDB = inDB ? inDB : false;
     }
 
-    static async findMaterialsByRecipe(recipe) {
+    static async findMaterialsByRecipeID(recipe) {
         try {
-            let [results] = await dbConnection.makeQuery('SELECT * FROM ContainsPaints WHERE RecipeID=?', [ recipe.id ]);
+            let [results] = await dbConnection.makeQuery('SELECT * FROM ContainsPaints WHERE RecipeID=?', [ recipe ]);
             if (results.length > 0) {
                 let containsPaints = []
                 for (let index = 0; index < results.length; index++) {
@@ -31,7 +31,7 @@ class ContainsPaint {
         try {
             if (this.inDB) {
                 await dbConnection.makeQuery(
-                    'UPDATE ContainsPaints SET RecipeID=?, MaterialCode=?, Grammage=?, WHERE RecipeID=? AND MaterialCode=?;',
+                    'UPDATE ContainsPaints SET RecipeID=?, MaterialCode=?, Grammage=? WHERE RecipeID=? AND MaterialCode=?;',
                     [this.recipeId, this.materialCode, this.grammage, this.recipeId, this.materialCode]
                 );
             } else {

@@ -24,7 +24,10 @@ const loginUser = async (user) => {
     if (newUser) {
         if (newUser.password === user.Password) {
             let sessionID = await newUser.createSession();
-            return sessionID;
+            return {
+                sessionID: sessionID,
+                user: newUser
+            };
         }
         return false;
     }

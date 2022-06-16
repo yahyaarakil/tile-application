@@ -27,9 +27,12 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        sessionID = await userController.loginUser(req.body);
-        if (sessionID) {
-            res.status(200).json(sessionID);
+        let userSessionID = await userController.loginUser(req.body);
+        if (userSessionID.sessionID) {
+            res.status(200).json({
+                session: userSessionID.sessionID,
+                role: userSessionID.user.role
+            });
         } else {
             res.status(500).json({ 'message': 'Error' });
         }

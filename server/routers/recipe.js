@@ -6,7 +6,8 @@ let router = express.Router();
 
 router.get('/recipes', async (req, res) => {
     try {
-        let approval = req.query.unapproved === true ? true : false;
+        let approval = req.query.unapproved === false ? false : true;
+        console.log(approval);
         res.status(200).json(await recipeController.fetchAllRecipes(approval));
     } catch {
         res.status(500).send("ERROR");
